@@ -13,10 +13,6 @@ module.exports = {
   devServer: {
     watchFiles: ["./src/template.html"],
   },
-  "scripts": {
-    "build": "webpack",
-    "dev": "webpack serve",
-  },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/template.html",
