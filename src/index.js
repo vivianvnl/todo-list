@@ -1,3 +1,4 @@
+import "./styles.css";
 import { Project, Task } from './todos.js';
 
 const taskOne = new Task('Clean', 'cool', 'tomorrow', 'high');
