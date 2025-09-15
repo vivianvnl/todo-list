@@ -3,6 +3,10 @@ export class Project {
         this.name = name;
         this.project = [];
     }
+
+    addTaskToProject(task) {
+        this.project.push(task);
+    }
 }
 
 export class Task{
@@ -18,8 +22,3 @@ export class Task{
         return `New task: ${this.taskName}, Description: ${this.description}, Due: ${this.dueDate}, Priority: ${this.priority}`
     }
 };
-
-function addTaskToProject(task) {
-    this.project.push(task);
-    return this.project;
-}
