@@ -1,5 +1,4 @@
 #task {
-    background-color: #FFBF65;
     border-radius: 35px;
     width: 850px;
     height: 80px;
@@ -8,7 +7,7 @@
 
     display: flex;
     justify-content: stretch;
-    gap: 22px;
+    gap: 25px;
 }
 
 #checkbox {
@@ -18,15 +17,42 @@
     height: 50px;
 }
 
+p {
+    color: white;
+}
+
 #taskNameAndDueDate {
-    padding: 0;
-    gap: 0;
+    align-self: center;
+    line-height: 1;
+}
+
+#taskName {
+    font-size: 38px;
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#dueDate {
+    font-size: 22px;
+    opacity: 0.8;
+}
+
+#description {
+    font-size: 34px;
+    align-self: center;
+    width: 250px;
+    margin-right: 25px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    opacity: 0.65;
 }
 
 #editButton {
     border: 3px solid white;
     border-radius: 35px;
-    margin-left: 375px;
     padding: 0 30px;
     font-size: 30px;
 }
@@ -35,20 +61,6 @@
     font-family: "Arial", sans-serif;
     font-size: 95px;
     font-weight: 400;
-    transform: translateY(-22px) translateX(10px) rotate(45deg);
-}
-
-p {
-    color: white;
-}
-
-#taskName {
-    font-size: 38px;
-    transform: translateY(-10px);
-}
-
-#dueDate {
-    font-size: 22px;
-    opacity: 0.8;
-    transform: translateY(-18px);
+    align-self: center;
+    transform: rotate(45deg);
 }
