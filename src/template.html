@@ -8,9 +8,9 @@
 <body>
     <nav>
         <div>
-            <dialog>
-                <div id="dialog-div">
-                    <form method="dialog">
+            <dialog id="newTaskDialog">
+                <div class="dialog-div">
+                    <form id="newTaskForm" method="dialog">
                         <legend>Add a Task!</legend>
                         <fieldset>
                             <div>
@@ -48,6 +48,24 @@
                 </div>
             </dialog>
             <button id="newTaskButton">New Task</button>
+            <dialog id="newProjectDialog">
+                <div class="dialog-div">
+                    <form id="newProjectForm" method="dialog">
+                        <legend>Add a Project!</legend>
+                        <fieldset>
+                            <div>
+                                <label for="projectName">Project Name:</label>
+                                <input type="text" name="projectName" id="projectNameValue">
+                            </div>
+                        </fieldset>
+
+                        <div id="dialogButtons">
+                            <button value="cancel" formmethod="dialog">Cancel</button>
+                            <button type="submit" id="createProjectButton" value="default">Create Project</button>
+                        </div>
+                    </form>
+                </div>
+            </dialog>
             <button id="newProjectButton">New Project</button>
         </div>
         <div>

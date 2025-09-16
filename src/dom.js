@@ -6,12 +6,12 @@ import { Project, Task } from './todos.js';
 
 export function newTaskForm() {
     const newTaskButton = document.getElementById('newTaskButton');
-    const dialog = document.querySelector('dialog');
-    const createTaskBtn = dialog.querySelector("#createTaskButton");
-    const form = document.querySelector('form');
+    const taskDialog = document.getElementById('newTaskDialog');
+    const createTaskBtn = taskDialog.querySelector("#createTaskButton");
+    const taskForm = document.getElementById('newTaskForm');
 
     newTaskButton.addEventListener("click", () => {
-    dialog.showModal();
+    taskDialog.showModal();
     });
 
     createTaskBtn.addEventListener("click", (event) => {
@@ -27,10 +27,41 @@ export function newTaskForm() {
     newProject.addTaskToProject(newTask);
     console.log(newProject.project);
 
-    dialog.close();
-    form.reset();
+    taskDialog.close();
+    taskForm.reset();
     return createTaskUI(newProject.project);
     });
+}
+
+export function newProjectForm() {
+    const newProjectButton = document.getElementById('newProjectButton');
+    const projectDialog = document.getElementById('newProjectDialog');
+    const createProjectButton = projectDialog.querySelector("#createProjectButton");
+    const projectForm = document.getElementById('newProjectForm');
+
+    newProjectButton.addEventListener("click", () => {
+    projectDialog.showModal();
+    });
+
+    createProjectButton.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const projectName = document.getElementById('projectNameValue').value;
+    const projectOne = new Project(projectName);
+
+    projectDialog.close();
+    projectForm.reset();
+    return createProjectUI(projectOne);
+    });
+}
+
+export function createProjectUI(project) {
+    const projectList = document.querySelector('ul');
+
+    const projectListItem = document.createElement('li');
+    projectListItem.textContent = project.name;
+
+    projectList.append(projectListItem);
 }
 
 export function createTaskUI(project) {

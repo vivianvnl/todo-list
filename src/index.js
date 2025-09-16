@@ -1,8 +1,8 @@
 import "./globalStyles.css";
 import "./domStyles.css";
 
-import { Project, Task } from './todos.js';
-import { newTaskForm, createTaskUI } from './dom.js';
+//import { Project, Task } from './todos.js';
+import { newTaskForm, newProjectForm } from './dom.js';
 
 /*
 const taskOne = new Task('Clean', 'cool', 'tomorrow', 'high');
@@ -16,3 +16,4 @@ console.log(chores.project);
 */
 
 newTaskForm();
+newProjectForm();

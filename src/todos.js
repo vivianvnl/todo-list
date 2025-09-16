@@ -9,7 +9,7 @@ export class Project {
     }
 }
 
-export class Task{
+export class Task {
     constructor(taskName, description, dueDate, priority) {
         this.taskName = taskName;
         this.description = description;
