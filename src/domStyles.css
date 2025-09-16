@@ -64,3 +64,64 @@ p {
     align-self: center;
     transform: rotate(45deg);
 }
+
+dialog  {
+    background-color: #ffe710;
+    border-radius: 10px;
+    margin: auto;
+    color: white;
+}
+
+legend, dialog button {
+    font-size: 35px;
+}
+
+dialog p, label {
+    font-size: 30px;
+    padding-right: 10px;
+}
+
+#dialogButtons {
+    justify-self: center;
+}
+
+dialog button {
+    padding: 15px 30px 0;
+}
+
+fieldset {
+    border: 2px solid rgb(243, 209, 19);
+    border-radius: 10px;
+}
+
+input {
+    border: none;
+    border-radius: 10px;
+    padding: 20px 10px;
+    font-size: 22px;
+    margin: 5px 0;
+}
+
+input:hover {
+    cursor: text;
+}
+
+input[type='radio'] {
+    width: 25px;
+    height: 25px;
+    align-self: center;
+    cursor: pointer;
+    accent-color: #FFBF65;
+}
+
+input[type='text'] {
+    font-family: "Arial", sans-serif;
+    align-self: center;
+    min-width: auto;
+    max-width: 300px;
+    height: 35px;
+}
+
+.priorityChoice {
+    font-size: 25px;
+}

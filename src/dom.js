@@ -17,9 +17,9 @@ export function newTaskForm() {
     createTaskBtn.addEventListener("click", (event) => {
     event.preventDefault();
 
-    const taskName = document.getElementById('taskName').value;
-    const description = document.getElementById('description').value;
-    const dueDate = document.getElementById('dueDate').value;
+    const taskName = document.getElementById('taskNameValue').value;
+    const description = document.getElementById('descriptionValue').value;
+    const dueDate = document.getElementById('dueDateValue').value;
     const priority = document.querySelector('input[name="priorityChoice"]:checked').value;
 
     const newTask = new Task(taskName, description, dueDate, priority);

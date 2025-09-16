@@ -14,5 +14,5 @@ Create a webapp where you can add to-do list tasks to different projects and add
 - modify tasks
 - checklist (cross off/hide)
 - priority level
-- swtich between projects and their tasks
+- switch between projects and their tasks
 - check browser refresh

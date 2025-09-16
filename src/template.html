@@ -9,41 +9,43 @@
     <nav>
         <div>
             <dialog>
-                <form method="dialog">
-                    <legend>Add a Task!</legend>
-                    <fieldset>
-                        <div>
-                            <label for="taskName">Task Name:</label>
-                            <input type="text" name="taskName" id="taskName">
-                        </div>
-                        <div>
-                            <label for="description">Description:</label>
-                            <input type="text" name="description" id="description">
-                        </div>
-                        <div>
-                            <label for="dueDate">Due Date:</label>
-                            <input type="text" name="dueDate" id="dueDate">
-                        </div>
-                        <p>Priority Level:</p>
-                        <div>
-                            <label for="optionHigh">High</label>
-                            <input type="radio" name="priorityChoice" id="optionHigh" value="high">
-                        </div>
-                        <div>
-                            <label for="optionMedium">Medium</label>
-                            <input type="radio" name="priorityChoice" id="optionMedium" value="medium">
-                        </div>
-                        <div>
-                            <label for="optionLow">Low</label>
-                            <input type="radio" name="priorityChoice" id="optionLow" value="low">
-                        </div>
-                    </fieldset>
+                <div id="dialog-div">
+                    <form method="dialog">
+                        <legend>Add a Task!</legend>
+                        <fieldset>
+                            <div>
+                                <label for="taskName">Task Name:</label>
+                                <input type="text" name="taskName" id="taskNameValue">
+                            </div>
+                            <div>
+                                <label for="description">Description:</label>
+                                <input type="text" name="description" id="descriptionValue">
+                            </div>
+                            <div>
+                                <label for="dueDate">Due Date:</label>
+                                <input type="text" name="dueDate" id="dueDateValue">
+                            </div>
+                            <p>Priority Level:</p>
+                            <div>
+                                <input type="radio" name="priorityChoice" id="optionHigh" value="high">
+                                <label class="priorityChoice" for="optionHigh">High</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="priorityChoice" id="optionMedium" value="medium">
+                                <label class="priorityChoice" for="optionMedium">Medium</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="priorityChoice" id="optionLow" value="low">
+                                <label class="priorityChoice" for="optionLow">Low</label>
+                            </div>
+                        </fieldset>
 
-                    <div>
-                        <button value="cancel" formmethod="dialog">Cancel</button>
-                        <button type="submit" id="createTaskButton" value="default">Add Task</button>
-                    </div>
-                </form>
+                        <div id="dialogButtons">
+                            <button value="cancel" formmethod="dialog">Cancel</button>
+                            <button type="submit" id="createTaskButton" value="default">Add Task</button>
+                        </div>
+                    </form>
+                </div>
             </dialog>
             <button id="newTaskButton">New Task</button>
             <button id="newProjectButton">New Project</button>
