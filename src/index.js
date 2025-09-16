@@ -2,7 +2,7 @@ import "./globalStyles.css";
 import "./domStyles.css";
 
 import { Project, Task } from './todos.js';
-import { createTaskUI } from './dom.js';
+import { newTaskForm, createTaskUI } from './dom.js';
 
 /*
 const taskOne = new Task('Clean', 'cool', 'tomorrow', 'high');
@@ -15,4 +15,4 @@ chores.addTaskToProject(taskTwo);
 console.log(chores.project);
 */
 
-createTaskUI()
+newTaskForm();

@@ -4,13 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To Do List</title>
-    
 <script defer src="main.js"></script></head>
 <body>
     <nav>
         <div>
-            <button>New Task</button>
-            <button>New Project</button>
+            <dialog>
+                <form method="dialog">
+                    <legend>Add a Task!</legend>
+                    <fieldset>
+                        <div>
+                            <label for="taskName">Task Name:</label>
+                            <input type="text" name="taskName" id="taskName">
+                        </div>
+                        <div>
+                            <label for="description">Description:</label>
+                            <input type="text" name="description" id="description">
+                        </div>
+                        <div>
+                            <label for="dueDate">Due Date:</label>
+                            <input type="text" name="dueDate" id="dueDate">
+                        </div>
+                        <p>Priority Level:</p>
+                        <div>
+                            <label for="optionHigh">High</label>
+                            <input type="radio" name="priorityChoice" id="optionHigh" value="high">
+                        </div>
+                        <div>
+                            <label for="optionMedium">Medium</label>
+                            <input type="radio" name="priorityChoice" id="optionMedium" value="medium">
+                        </div>
+                        <div>
+                            <label for="optionLow">Low</label>
+                            <input type="radio" name="priorityChoice" id="optionLow" value="low">
+                        </div>
+                    </fieldset>
+
+                    <div>
+                        <button value="cancel" formmethod="dialog">Cancel</button>
+                        <button type="submit" id="createTaskButton" value="default">Add Task</button>
+                    </div>
+                </form>
+            </dialog>
+            <button id="newTaskButton">New Task</button>
+            <button id="newProjectButton">New Project</button>
         </div>
         <div>
             <h3>Projects</h3>

@@ -1,18 +1,41 @@
 import { Project, Task } from './todos.js';
 
-const taskOne = new Task('Clean a crap ton yay', 'cool', 'tomorrow', 'high');
-const taskTwo = new Task('have fun', 'yay', '09/13/25', 'low');
+//const taskOne = new Task('Clean a crap ton yay', 'cool', 'tomorrow', 'high');
+//const taskTwo = new Task('have fun', 'yay', '09/13/25', 'low');
 //taskOne.taskComplete();
 
-const chores = new Project();
-chores.addTaskToProject(taskOne);
-chores.addTaskToProject(taskTwo);
-console.log(chores.project);
-console.log(chores.project[0].description);
+export function newTaskForm() {
+    const newTaskButton = document.getElementById('newTaskButton');
+    const dialog = document.querySelector('dialog');
+    const createTaskBtn = dialog.querySelector("#createTaskButton");
+    const form = document.querySelector('form');
 
-const selectedProject = document.getElementById('selectedProject');
+    newTaskButton.addEventListener("click", () => {
+    dialog.showModal();
+    });
 
-export function createTaskUI() {
+    createTaskBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const taskName = document.getElementById('taskName').value;
+    const description = document.getElementById('description').value;
+    const dueDate = document.getElementById('dueDate').value;
+    const priority = document.querySelector('input[name="priorityChoice"]:checked').value;
+
+    const newTask = new Task(taskName, description, dueDate, priority);
+    const newProject = new Project();
+    newProject.addTaskToProject(newTask);
+    console.log(newProject.project);
+
+    dialog.close();
+    form.reset();
+    return createTaskUI(newProject.project);
+    });
+}
+
+export function createTaskUI(project) {
+    const selectedProject = document.getElementById('selectedProject');
+
     const task = document.createElement('div');
     task.id = 'task';
     task.setAttribute('style', 'background-color: #FFBF65');
@@ -21,13 +44,13 @@ export function createTaskUI() {
     checkbox.id = 'checkbox';
 
     const taskName = document.createElement('p');
-    taskName.textContent = chores.project[0].taskName;
+    taskName.textContent = project[0].taskName;
     taskName.id = 'taskName';
     const dueDate = document.createElement('p');
-    dueDate.textContent = chores.project[0].dueDate;
+    dueDate.textContent = project[0].dueDate;
     dueDate.id = 'dueDate';
     const description = document.createElement('p');
-    description.textContent = chores.project[0].description;
+    description.textContent = project[0].description;
     description.id = 'description';
 
     const editButton = document.createElement('button');
