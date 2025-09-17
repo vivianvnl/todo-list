@@ -125,3 +125,13 @@ input[type='text'] {
 .priorityChoice {
     font-size: 25px;
 }
+
+#projectsToClick {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#selectedProject p{
+    color: black;
+}

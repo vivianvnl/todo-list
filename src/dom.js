@@ -56,12 +56,30 @@ export function newProjectForm() {
 }
 
 export function createProjectUI(project) {
-    const projectList = document.querySelector('ul');
+    const projectList = document.getElementById('projectsToClick');
 
-    const projectListItem = document.createElement('li');
+    const projectListItem = document.createElement('button');
     projectListItem.textContent = project.name;
+    projectListItem.classList.add('projectButtons');
 
     projectList.append(projectListItem);
+}
+
+export function showProject() {
+    const selectedProject = document.getElementById('selectedProject');
+    const projectsToClick = document.getElementById('projectsToClick');
+
+    projectsToClick.addEventListener('click', (event) => {
+        selectedProject.innerHTML = '';
+
+        if (event.target.tagName === 'BUTTON') {
+            selectedProject.innerHTML = `
+            <h2>${event.target.textContent}</h2>
+            <p>${event.target.textContent}</p>
+        `;
+        }
+    });
+    
 }
 
 export function createTaskUI(project) {
