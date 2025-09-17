@@ -21,15 +21,15 @@ export function newTaskForm() {
     const description = document.getElementById('descriptionValue').value;
     const dueDate = document.getElementById('dueDateValue').value;
     const priority = document.querySelector('input[name="priorityChoice"]:checked').value;
+    const projectSelection = document.getElementById('projectSelection').value;
 
-    const newTask = new Task(taskName, description, dueDate, priority);
-    const newProject = new Project();
-    newProject.addTaskToProject(newTask);
-    console.log(newProject.project);
+    const newTask = new Task(taskName, description, dueDate, priority, projectSelection);
+    projectSelection.addTaskToProject(newTask);
+    console.log(projectSelection.project);
 
     taskDialog.close();
     taskForm.reset();
-    return createTaskUI(newProject.project);
+    return createTaskUI(projectSelection.project);
     });
 }
 
@@ -45,24 +45,30 @@ export function newProjectForm() {
 
     createProjectButton.addEventListener("click", (event) => {
     event.preventDefault();
-
+//want the object variable name to be same as name property within obj
     const projectName = document.getElementById('projectNameValue').value;
-    const projectOne = new Project(projectName);
+    const newProject = new Project(projectName);
 
     projectDialog.close();
     projectForm.reset();
-    return createProjectUI(projectOne);
+    return createProjectUI(newProject);
     });
 }
 
 export function createProjectUI(project) {
+    //add project to nav bar
     const projectList = document.getElementById('projectsToClick');
-
     const projectListItem = document.createElement('button');
     projectListItem.textContent = project.name;
     projectListItem.classList.add('projectButtons');
-
     projectList.append(projectListItem);
+
+    //add project to 'new task' form
+    const projectSelection = document.getElementById('projectSelection');
+    const projectSelectionOption = document.createElement('option');
+    projectSelectionOption.textContent = project.name;
+    projectSelectionOption.value = project.name;
+    projectSelection.append(projectSelectionOption);
 }
 
 export function showProject() {
@@ -79,7 +85,6 @@ export function showProject() {
         `;
         }
     });
-    
 }
 
 export function createTaskUI(project) {
