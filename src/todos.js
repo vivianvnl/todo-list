@@ -9,6 +9,14 @@ export class Project {
     }
 }
 
+export let projectList = [];
+
+export function addProjectToList(project) {
+    projectList.push(project);
+    console.log(projectList);
+    return projectList;
+}
+
 export class Task {
     constructor(taskName, description, dueDate, priority) {
         this.taskName = taskName;

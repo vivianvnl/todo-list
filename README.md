@@ -19,3 +19,5 @@ Create a webapp where you can add to-do list tasks to different projects and add
 - store task info in database
   - view database
 - check browser refresh
+
+- create array of projects and iterate over them to see if target event id is == to a project's variable name in array and if so, display that project's contents in selectedProject div

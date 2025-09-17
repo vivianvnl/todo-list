@@ -1,8 +1,4 @@
-import { Project, Task } from './todos.js';
-
-//const taskOne = new Task('Clean a crap ton yay', 'cool', 'tomorrow', 'high');
-//const taskTwo = new Task('have fun', 'yay', '09/13/25', 'low');
-//taskOne.taskComplete();
+import { Project, projectList, addProjectToList, Task } from './todos.js';
 
 export function newTaskForm() {
     const newTaskButton = document.getElementById('newTaskButton');
@@ -11,83 +7,26 @@ export function newTaskForm() {
     const taskForm = document.getElementById('newTaskForm');
 
     newTaskButton.addEventListener("click", () => {
-    taskDialog.showModal();
+        taskDialog.showModal();
     });
 
     createTaskBtn.addEventListener("click", (event) => {
-    event.preventDefault();
+        event.preventDefault();
 
-    const taskName = document.getElementById('taskNameValue').value;
-    const description = document.getElementById('descriptionValue').value;
-    const dueDate = document.getElementById('dueDateValue').value;
-    const priority = document.querySelector('input[name="priorityChoice"]:checked').value;
-    const projectSelection = document.getElementById('projectSelection').value;
+        const taskName = document.getElementById('taskNameValue').value;
+        const description = document.getElementById('descriptionValue').value;
+        const dueDate = document.getElementById('dueDateValue').value;
+        const priority = document.querySelector('input[name="priorityChoice"]:checked').value;
 
-    const newTask = new Task(taskName, description, dueDate, priority, projectSelection);
-    projectSelection.addTaskToProject(newTask);
-    console.log(projectSelection.project);
+        const newTask = new Task(taskName, description, dueDate, priority);
 
-    taskDialog.close();
-    taskForm.reset();
-    return createTaskUI(projectSelection.project);
+        taskDialog.close();
+        taskForm.reset();
+        return createTaskUI(newTask);
     });
 }
 
-export function newProjectForm() {
-    const newProjectButton = document.getElementById('newProjectButton');
-    const projectDialog = document.getElementById('newProjectDialog');
-    const createProjectButton = projectDialog.querySelector("#createProjectButton");
-    const projectForm = document.getElementById('newProjectForm');
-
-    newProjectButton.addEventListener("click", () => {
-    projectDialog.showModal();
-    });
-
-    createProjectButton.addEventListener("click", (event) => {
-    event.preventDefault();
-//want the object variable name to be same as name property within obj
-    const projectName = document.getElementById('projectNameValue').value;
-    const newProject = new Project(projectName);
-
-    projectDialog.close();
-    projectForm.reset();
-    return createProjectUI(newProject);
-    });
-}
-
-export function createProjectUI(project) {
-    //add project to nav bar
-    const projectList = document.getElementById('projectsToClick');
-    const projectListItem = document.createElement('button');
-    projectListItem.textContent = project.name;
-    projectListItem.classList.add('projectButtons');
-    projectList.append(projectListItem);
-
-    //add project to 'new task' form
-    const projectSelection = document.getElementById('projectSelection');
-    const projectSelectionOption = document.createElement('option');
-    projectSelectionOption.textContent = project.name;
-    projectSelectionOption.value = project.name;
-    projectSelection.append(projectSelectionOption);
-}
-
-export function showProject() {
-    const selectedProject = document.getElementById('selectedProject');
-    const projectsToClick = document.getElementById('projectsToClick');
-
-    projectsToClick.addEventListener('click', (event) => {
-        selectedProject.innerHTML = '';
-
-        if (event.target.tagName === 'BUTTON') {
-            selectedProject.innerHTML = `
-            <h2>${event.target.textContent}</h2>
-            <p>${event.target.textContent}</p>
-        `;
-        }
-    });
-}
-
-export function createTaskUI(project) {
+export function createTaskUI(newTask) {
     const selectedProject = document.getElementById('selectedProject');
 
     const task = document.createElement('div');
@@ -98,13 +37,13 @@ export function createTaskUI(project) {
     checkbox.id = 'checkbox';
 
     const taskName = document.createElement('p');
-    taskName.textContent = project[0].taskName;
+    taskName.textContent = newTask.taskName;
     taskName.id = 'taskName';
     const dueDate = document.createElement('p');
-    dueDate.textContent = project[0].dueDate;
+    dueDate.textContent = newTask.dueDate;
     dueDate.id = 'dueDate';
     const description = document.createElement('p');
-    description.textContent = project[0].description;
+    description.textContent = newTask.description;
     description.id = 'description';
 
     const editButton = document.createElement('button');
@@ -121,3 +60,64 @@ export function createTaskUI(project) {
     taskNameAndDueDate.append(taskName, dueDate);
     task.append(checkbox, taskNameAndDueDate, description, editButton, deleteButton);
 }
+
+export function newProjectForm() {
+    const newProjectButton = document.getElementById('newProjectButton');
+    const projectDialog = document.getElementById('newProjectDialog');
+    const createProjectButton = projectDialog.querySelector("#createProjectButton");
+    const projectForm = document.getElementById('newProjectForm');
+
+    newProjectButton.addEventListener("click", () => {
+        projectDialog.showModal();
+    });
+
+    createProjectButton.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const projectName = document.getElementById('projectNameValue').value;
+        const newProject = new Project(projectName);
+
+        projectDialog.close();
+        projectForm.reset();
+        return createProjectUI(newProject);
+    });
+}
+
+export function createProjectUI(project) {
+    //add project to nav bar
+    const projectList = document.getElementById('projectsToClick');
+    const projectListItem = document.createElement('button');
+    projectListItem.textContent = project.name;
+    projectListItem.classList.add('projectButtons');
+    projectList.append(projectListItem);
+    
+    addProjectToList(project);
+}
+
+export function showProject() {
+    const selectedProject = document.getElementById('selectedProject');
+    const projectsToClick = document.getElementById('projectsToClick');
+
+    projectsToClick.addEventListener('click', (event) => {
+        selectedProject.innerHTML = '';
+        console.log(projectList);
+        const foundProject = projectList.find(project => project.name === event.target.textContent);
+        console.log(foundProject);
+
+        if (event.target.tagName === 'BUTTON') {
+            if (foundProject) {
+                console.log(foundProject.project);
+                selectedProject.innerHTML = `
+                <h2>${foundProject.name}</h2>
+                <p>${foundProject.project}</p>
+            `;
+            }
+            
+            //selectedProject.innerHTML = `
+            //<h2>${event.target.textContent}</h2>
+            //<p>${event.target.textContent}</p>
+        //`;
+        }
+    });
+}
+
