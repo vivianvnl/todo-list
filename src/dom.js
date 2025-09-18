@@ -28,17 +28,20 @@ export const newTaskForm = function newTaskForm() {
         if (foundSelectedProject.name) {
             console.log(foundSelectedProject);
             foundSelectedProject.addTaskToProject(newTask);
+            createTasks(foundSelectedProject.project);
         };
 
         taskDialog.close();
         taskForm.reset();
-        return newTask;
     });
 }
 
 export const createTasks = function createTaskUI(project) {
     const selectedProject = document.getElementById('selectedProject');
-
+    const selectedProjectHeader = selectedProject.querySelector('h2');
+    selectedProject.innerHTML = `
+        <h2>${selectedProjectHeader.innerHTML}</h2>
+        `;
     for (let i = 0; i < project.length; i++) {
         const task = document.createElement('div');
         task.id = 'task';
@@ -117,17 +120,16 @@ export function showProject() {
         const foundProject = projectList.find(project => project.name === event.target.textContent);
         console.log(projectList);
         console.log(foundProject);
+        console.log(foundProject.project);
 
         if (event.target.tagName === 'BUTTON') {
-            if (foundProject) {
+            console.log(foundProject.project);
+            selectedProject.innerHTML = `
+            <h2>${foundProject.name}</h2>
+            `;
+            if (foundProject.project.length > 0) {
                 console.log(foundProject.project);
-                console.log(foundProject.project.length);
-                selectedProject.innerHTML = `
-                <h2>${foundProject.name}</h2>
-                `;
-                if (foundProject.project.length !== 0) {
-                    createTasks(foundProject.project);
-                }
+                selectedProject.innerHTML += createTasks(foundProject.project);
             }
         }
     });
