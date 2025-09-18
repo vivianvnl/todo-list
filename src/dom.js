@@ -36,42 +36,42 @@ export const newTaskForm = function newTaskForm() {
     });
 }
 
-export const createTasks = function createTaskUI(newTaskForm) {
+export const createTasks = function createTaskUI(project) {
     const selectedProject = document.getElementById('selectedProject');
 
-    const task = document.createElement('div');
-    task.id = 'task';
-    task.setAttribute('style', 'background-color: #FFBF65');
+    for (let i = 0; i < project.length; i++) {
+        const task = document.createElement('div');
+        task.id = 'task';
+        task.setAttribute('style', 'background-color: #FFBF65');
 
-    const checkbox = document.createElement('div');
-    checkbox.id = 'checkbox';
+        const checkbox = document.createElement('div');
+        checkbox.id = 'checkbox';
 
-    const taskName = document.createElement('p');
-    taskName.textContent = newTaskForm.taskName;
-    taskName.id = 'taskName';
-    const dueDate = document.createElement('p');
-    dueDate.textContent = newTaskForm.dueDate;
-    dueDate.id = 'dueDate';
-    const description = document.createElement('p');
-    description.textContent = newTaskForm.description;
-    description.id = 'description';
+        console.log(project[i]);
+        const taskName = document.createElement('p');
+        taskName.textContent = project[i].taskName;
+        taskName.id = 'taskName';
+        const dueDate = document.createElement('p');
+        dueDate.textContent = project[i].dueDate;
+        dueDate.id = 'dueDate';
+        const description = document.createElement('p');
+        description.textContent = project[i].description;
+        description.id = 'description';
 
-    const editButton = document.createElement('button');
-    editButton.textContent = "Edit";
-    editButton.id = 'editButton';
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = "+";
-    deleteButton.id = 'deleteButton';
+        const editButton = document.createElement('button');
+        editButton.textContent = "Edit";
+        editButton.id = 'editButton';
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = "+";
+        deleteButton.id = 'deleteButton';
 
-    const taskNameAndDueDate = document.createElement('div');
-    taskNameAndDueDate.id = 'taskNameAndDueDate';
+        const taskNameAndDueDate = document.createElement('div');
+        taskNameAndDueDate.id = 'taskNameAndDueDate';
 
-    return function() {
         taskNameAndDueDate.append(taskName, dueDate);
         task.append(checkbox, taskNameAndDueDate, description, editButton, deleteButton);
         selectedProject.append(task);
-        return selectedProject;
-    };
+    }
 }
 
 export function newProjectForm() {
@@ -113,17 +113,21 @@ export function showProject() {
 
     projectsToClick.addEventListener('click', (event) => {
         selectedProject.innerHTML = '';
-        console.log(projectList);
+        
         const foundProject = projectList.find(project => project.name === event.target.textContent);
+        console.log(projectList);
         console.log(foundProject);
 
         if (event.target.tagName === 'BUTTON') {
             if (foundProject) {
                 console.log(foundProject.project);
+                console.log(foundProject.project.length);
                 selectedProject.innerHTML = `
                 <h2>${foundProject.name}</h2>
-                <p>${createTasks}</p>
-            `;
+                `;
+                if (foundProject.project.length !== 0) {
+                    createTasks(foundProject.project);
+                }
             }
         }
     });
