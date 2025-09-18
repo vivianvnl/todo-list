@@ -1,6 +1,6 @@
 import { Project, projectList, addProjectToList, Task } from './todos.js';
 
-export function newTaskForm() {
+export const newTaskForm = function newTaskForm() {
     const newTaskButton = document.getElementById('newTaskButton');
     const taskDialog = document.getElementById('newTaskDialog');
     const createTaskBtn = taskDialog.querySelector("#createTaskButton");
@@ -19,14 +19,24 @@ export function newTaskForm() {
         const priority = document.querySelector('input[name="priorityChoice"]:checked').value;
 
         const newTask = new Task(taskName, description, dueDate, priority);
+        
+        const selectedProject = document.getElementById('selectedProject');
+        const selectedProjectHeader = selectedProject.querySelector('h2');
+        console.log(selectedProjectHeader.textContent);
+        const foundSelectedProject = projectList.find(project => project.name === selectedProjectHeader.textContent);
+        console.log(foundSelectedProject.name);
+        if (foundSelectedProject.name) {
+            console.log(foundSelectedProject);
+            foundSelectedProject.addTaskToProject(newTask);
+        };
 
         taskDialog.close();
         taskForm.reset();
-        return createTaskUI(newTask);
+        return newTask;
     });
 }
 
-export function createTaskUI(newTask) {
+export const createTasks = function createTaskUI(newTaskForm) {
     const selectedProject = document.getElementById('selectedProject');
 
     const task = document.createElement('div');
@@ -37,13 +47,13 @@ export function createTaskUI(newTask) {
     checkbox.id = 'checkbox';
 
     const taskName = document.createElement('p');
-    taskName.textContent = newTask.taskName;
+    taskName.textContent = newTaskForm.taskName;
     taskName.id = 'taskName';
     const dueDate = document.createElement('p');
-    dueDate.textContent = newTask.dueDate;
+    dueDate.textContent = newTaskForm.dueDate;
     dueDate.id = 'dueDate';
     const description = document.createElement('p');
-    description.textContent = newTask.description;
+    description.textContent = newTaskForm.description;
     description.id = 'description';
 
     const editButton = document.createElement('button');
@@ -56,9 +66,12 @@ export function createTaskUI(newTask) {
     const taskNameAndDueDate = document.createElement('div');
     taskNameAndDueDate.id = 'taskNameAndDueDate';
 
-    selectedProject.append(task);
-    taskNameAndDueDate.append(taskName, dueDate);
-    task.append(checkbox, taskNameAndDueDate, description, editButton, deleteButton);
+    return function() {
+        taskNameAndDueDate.append(taskName, dueDate);
+        task.append(checkbox, taskNameAndDueDate, description, editButton, deleteButton);
+        selectedProject.append(task);
+        return selectedProject;
+    };
 }
 
 export function newProjectForm() {
@@ -109,14 +122,9 @@ export function showProject() {
                 console.log(foundProject.project);
                 selectedProject.innerHTML = `
                 <h2>${foundProject.name}</h2>
-                <p>${foundProject.project}</p>
+                <p>${createTasks}</p>
             `;
             }
-            
-            //selectedProject.innerHTML = `
-            //<h2>${event.target.textContent}</h2>
-            //<p>${event.target.textContent}</p>
-        //`;
         }
     });
 }
