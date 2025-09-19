@@ -112,11 +112,12 @@ export function showProject() {
     const selectedProject = document.getElementById('selectedProject');
     const projectsToClick = document.getElementById('projectsToClick');
 
+    createTasks(projectList[0]);
+
     projectsToClick.addEventListener('click', (event) => {
         selectedProject.innerHTML = '';
 
         const foundProject = projectList.find(project => project.name === event.target.textContent);
-        console.log(foundProject);
 
         if (event.target.tagName === 'BUTTON') {
             if (foundProject.project.length > 0) {
