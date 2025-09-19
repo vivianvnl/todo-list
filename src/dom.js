@@ -19,16 +19,14 @@ export const newTaskForm = function newTaskForm() {
         const priority = document.querySelector('input[name="priorityChoice"]:checked').value;
 
         const newTask = new Task(taskName, description, dueDate, priority);
-        
+
         const selectedProject = document.getElementById('selectedProject');
         const selectedProjectHeader = selectedProject.querySelector('h2');
-        console.log(selectedProjectHeader.textContent);
         const foundSelectedProject = projectList.find(project => project.name === selectedProjectHeader.textContent);
-        console.log(foundSelectedProject.name);
+
         if (foundSelectedProject.name) {
-            console.log(foundSelectedProject);
             foundSelectedProject.addTaskToProject(newTask);
-            createTasks(foundSelectedProject.project);
+            createTasks(foundSelectedProject);
         };
 
         taskDialog.close();
@@ -38,11 +36,12 @@ export const newTaskForm = function newTaskForm() {
 
 export const createTasks = function createTaskUI(project) {
     const selectedProject = document.getElementById('selectedProject');
-    const selectedProjectHeader = selectedProject.querySelector('h2');
     selectedProject.innerHTML = `
-        <h2>${selectedProjectHeader.innerHTML}</h2>
-        `;
-    for (let i = 0; i < project.length; i++) {
+    <h2>${project.name}</h2>
+    `;
+    const currentProject = project.project;
+
+    for (let i = 0; i < currentProject.length; i++) {
         const task = document.createElement('div');
         task.id = 'task';
         task.setAttribute('style', 'background-color: #FFBF65');
@@ -50,15 +49,14 @@ export const createTasks = function createTaskUI(project) {
         const checkbox = document.createElement('div');
         checkbox.id = 'checkbox';
 
-        console.log(project[i]);
         const taskName = document.createElement('p');
-        taskName.textContent = project[i].taskName;
+        taskName.textContent = currentProject[i].taskName;
         taskName.id = 'taskName';
         const dueDate = document.createElement('p');
-        dueDate.textContent = project[i].dueDate;
+        dueDate.textContent = currentProject[i].dueDate;
         dueDate.id = 'dueDate';
         const description = document.createElement('p');
-        description.textContent = project[i].description;
+        description.textContent = currentProject[i].description;
         description.id = 'description';
 
         const editButton = document.createElement('button');
@@ -106,7 +104,7 @@ export function createProjectUI(project) {
     projectListItem.textContent = project.name;
     projectListItem.classList.add('projectButtons');
     projectList.append(projectListItem);
-    
+
     addProjectToList(project);
 }
 
@@ -116,20 +114,17 @@ export function showProject() {
 
     projectsToClick.addEventListener('click', (event) => {
         selectedProject.innerHTML = '';
-        
+
         const foundProject = projectList.find(project => project.name === event.target.textContent);
-        console.log(projectList);
         console.log(foundProject);
-        console.log(foundProject.project);
 
         if (event.target.tagName === 'BUTTON') {
-            console.log(foundProject.project);
+            if (foundProject.project.length > 0) {
+                createTasks(foundProject);
+            } else if (foundProject.project.length === 0) {
             selectedProject.innerHTML = `
             <h2>${foundProject.name}</h2>
             `;
-            if (foundProject.project.length > 0) {
-                console.log(foundProject.project);
-                selectedProject.innerHTML += createTasks(foundProject.project);
             }
         }
     });
