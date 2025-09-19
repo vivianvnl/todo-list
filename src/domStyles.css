@@ -12,10 +12,40 @@
 }
 
 #checkbox {
+    appearance: none;
     border: 5px solid white;
     border-radius: 50%;
     width: 50px;
     height: 50px;
+    cursor: pointer;
+    margin: 0;
+}
+
+#checkbox:checked {
+    background-color: white;
+}
+
+#checkbox:checked::after {
+  content: '';
+  position: relative;
+  display: block;
+  left: 2.5px;
+  bottom: 16px;
+  width: 12px;
+  height: 24px;
+  border: solid #D6D6D6;
+  border-width: 0 4px 4px 0;
+  transform: rotate(40deg);
+}
+
+#crossOff {
+    background-color: white;
+    opacity: 0.7;
+    width: 160px;
+    height: 4px;
+    position: absolute;
+    top: 40px;
+    left: 85px;
 }
 
 p {
@@ -141,8 +171,4 @@ input[type='text'] {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-}
-
-#selectedProject p{
-    color: black;
 }

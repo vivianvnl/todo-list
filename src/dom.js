@@ -46,16 +46,48 @@ export const createTasks = function createTaskUI(project) {
         task.id = 'task';
         if (currentProject[i].priority === 'high') {
             task.setAttribute('style', 'background-color: #ff8465ff');
-        }
-        if (currentProject[i].priority === 'medium') {
+        } else if (currentProject[i].priority === 'medium') {
             task.setAttribute('style', 'background-color: #FFBF65');
-        }
-        if (currentProject[i].priority === 'low') {
+        } else if (currentProject[i].priority === 'low') {
             task.setAttribute('style', 'background-color: #B8E85F');
         }
 
-        const checkbox = document.createElement('div');
-        checkbox.id = 'checkbox';
+        let checkbox = document.createElement("input");
+        const crossOff = document.createElement('div');
+        crossOff.setAttribute("id", "crossOff");
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.setAttribute("id", "checkbox");
+        
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                currentProject[i].completed = true;
+                console.log(currentProject[i].completed);
+                task.setAttribute('style', 'background-color: #D6D6D6');
+                if (dueDate) {
+                    taskNameAndDueDate.removeChild(dueDate);
+                }
+                task.append(crossOff);
+            } else {
+                currentProject[i].completed = false;
+                console.log(currentProject[i].completed);
+
+                if (dueDate) {
+                    taskNameAndDueDate.append(dueDate);
+                }
+
+                if (crossOff) {
+                    task.removeChild(crossOff);
+                }
+
+                if (currentProject[i].priority === 'high') {
+                    task.setAttribute('style', 'background-color: #ff8465ff');
+                } else if (currentProject[i].priority === 'medium') {
+                    task.setAttribute('style', 'background-color: #FFBF65');
+                } else if (currentProject[i].priority === 'low') {
+                    task.setAttribute('style', 'background-color: #B8E85F');
+                }
+            }
+        });
 
         const taskName = document.createElement('p');
         taskName.textContent = currentProject[i].taskName;
@@ -70,7 +102,7 @@ export const createTasks = function createTaskUI(project) {
         const editButton = document.createElement('button');
         editButton.textContent = "Edit";
         editButton.id = 'editButton';
-        
+
         const deleteButton = document.createElement('button');
         deleteButton.textContent = "+";
         deleteButton.id = 'deleteButton';
@@ -83,7 +115,18 @@ export const createTasks = function createTaskUI(project) {
         const taskNameAndDueDate = document.createElement('div');
         taskNameAndDueDate.id = 'taskNameAndDueDate';
 
-        taskNameAndDueDate.append(taskName, dueDate);
+        if (currentProject[i].completed === false) {
+            taskNameAndDueDate.append(taskName, dueDate);
+        } else if (currentProject[i].completed === true) {
+                checkbox.checked = true;
+                console.log(currentProject[i].completed);
+                task.setAttribute('style', 'background-color: #D6D6D6');
+                if (dueDate) {
+                    taskNameAndDueDate.append(taskName);
+                }
+                task.append(crossOff);
+        } 
+
         task.append(checkbox, taskNameAndDueDate, description, editButton, deleteButton);
         selectedProject.append(task);
     }
