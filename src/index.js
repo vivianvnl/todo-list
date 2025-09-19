@@ -6,13 +6,15 @@ import { newTaskForm, newProjectForm, showProject, createProjectUI } from './dom
 
 
 const taskOne = new Task('Clean', 'bathroom, kitchen', 'tomorrow', 'high');
-const taskTwo = new Task('have fun', 'yay', '09/13/25', 'low');
+const taskTwo = new Task('Organize', 'closet', '9:00pm', 'medium');
+const taskThree = new Task('have fun', 'yay', '09/13/25', 'low');
 //taskOne.taskComplete();
 
 const newProject = new Project('General');
 createProjectUI(newProject);
 newProject.addTaskToProject(taskOne);
 newProject.addTaskToProject(taskTwo);
+newProject.addTaskToProject(taskThree);
 console.log(newProject.project);
 
 

@@ -44,7 +44,15 @@ export const createTasks = function createTaskUI(project) {
     for (let i = 0; i < currentProject.length; i++) {
         const task = document.createElement('div');
         task.id = 'task';
-        task.setAttribute('style', 'background-color: #FFBF65');
+        if (currentProject[i].priority === 'high') {
+            task.setAttribute('style', 'background-color: #ff8465ff');
+        }
+        if (currentProject[i].priority === 'medium') {
+            task.setAttribute('style', 'background-color: #FFBF65');
+        }
+        if (currentProject[i].priority === 'low') {
+            task.setAttribute('style', 'background-color: #B8E85F');
+        }
 
         const checkbox = document.createElement('div');
         checkbox.id = 'checkbox';
