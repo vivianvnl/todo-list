@@ -12,8 +12,8 @@ Create a webapp where you can add to-do list tasks to different projects and add
   - task part of project content html
   - remove html and replace with another project's html when project clicked in nav --using event.target.id
 - priority level
-
 - delete tasks
+
 - modify tasks
 - checklist (cross off/hide)
 - new task lets you choose which project to add to

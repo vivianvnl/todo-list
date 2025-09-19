@@ -70,9 +70,15 @@ export const createTasks = function createTaskUI(project) {
         const editButton = document.createElement('button');
         editButton.textContent = "Edit";
         editButton.id = 'editButton';
+        
         const deleteButton = document.createElement('button');
         deleteButton.textContent = "+";
         deleteButton.id = 'deleteButton';
+        deleteButton.addEventListener('click', function() {
+            this.parentElement.remove(); 
+            currentProject.splice([i], 1);
+            console.log(currentProject);
+        });
 
         const taskNameAndDueDate = document.createElement('div');
         taskNameAndDueDate.id = 'taskNameAndDueDate';
