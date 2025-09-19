@@ -8,6 +8,7 @@
     display: flex;
     justify-content: stretch;
     gap: 25px;
+    position: relative;
 }
 
 #checkbox {
@@ -42,12 +43,15 @@ p {
 #description {
     font-size: 34px;
     align-self: center;
-    width: 250px;
+    max-width: 325px;
     margin-right: 25px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     opacity: 0.65;
+
+    position: absolute;
+    left: 265px;
 }
 
 #editButton {
@@ -55,6 +59,10 @@ p {
     border-radius: 35px;
     padding: 0 30px;
     font-size: 30px;
+
+    position: absolute;
+    right: 100px;
+    top: 18px;
 }
 
 #deleteButton {
@@ -63,6 +71,9 @@ p {
     font-weight: 400;
     align-self: center;
     transform: rotate(45deg);
+
+    position: absolute;
+    right: 25px;
 }
 
 dialog  {

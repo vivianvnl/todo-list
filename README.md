@@ -8,14 +8,16 @@ Create a webapp where you can add to-do list tasks to different projects and add
 - display (in console) all tasks added in respective projects
 - UI
 - view created tasks in DOM
+- switch between projects and their tasks
+  - task part of project content html
+  - remove html and replace with another project's html when project clicked in nav --using event.target.id
+- priority level
+
 - delete tasks
 - modify tasks
 - checklist (cross off/hide)
-- priority level
-- switch between projects and their tasks
-  - new task lets you choose which project to add to
-  - task part of project content html
-  - remove html and replace with another project's html when project clicked in nav --using event.target.id
+- new task lets you choose which project to add to
+
 - store task info in database
   - view database
 - check browser refresh
