@@ -103,15 +103,50 @@ export const createTasks = function createTaskUI(project) {
         const editButton = document.createElement('button');
         editButton.textContent = "Edit";
         editButton.id = 'editButton';
-        editButton.addEventListener('click', function(event) {
-            const editDialog = document.getElementById('editDialog');
 
-            const taskName = document.getElementById('taskNameEdited').value;
-            const description = document.getElementById('descriptionEdited').value;
-            const dueDate = document.getElementById('dueDateEdited').value;
-            const priority = document.querySelector('input[name="priorityChoiceEdited"]:checked').value;
-            const selectedProjectOption = document.getElementById('projectSelectEdited').value;
+        const editDialog = document.getElementById('editDialog');
+        editButton.addEventListener('click', function(event) {
+            const taskNameEdited = document.getElementById('taskNameEdited');
+            const descriptionEdited = document.getElementById('descriptionEdited');
+            const dueDateEdited = document.getElementById('dueDateEdited');
+            //fix null value due to lack of priority options ?/project options
+            //const priorityChoiceEdited = document.querySelector('input[name="priorityChoiceEdited"]:checked').value;
+            const selectedProjectOptionEdited = document.getElementById('projectSelectEdited');
+            
+            console.log(document.querySelector('input[name="priorityChoiceEdited"]:checked').value);
+
+            taskNameEdited.value = taskName.textContent;
+            dueDateEdited.value = dueDate.textContent;
+            descriptionEdited.value = description.textContent;
+            priorityChoiceEdited = currentProject[i].priority;
+            selectedProjectOptionEdited.value = project.name;
+            
+            editDialog.showModal();
         });
+
+        const editForm = document.getElementById('editTaskForm');
+        const cancelButton = document.getElementById('cancelButton');
+
+        editForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            taskName.textContent = document.getElementById('taskNameEdited').value;
+            dueDate.textContent = document.getElementById('taskNameEdited').value;
+            description.textContent = document.getElementById('taskNameEdited').value;
+            currentProject[i].priority = document.querySelector('input[name="priorityChoiceEdited"]:checked').value;
+            
+            //check if working
+            const selectedProjectOptionEdited = document.getElementById('projectSelectEdited').value;
+            const foundSelectedProject = projectList.find(project => project.name === selectedProjectOptionEdited);
+            project = foundSelectedProject;
+
+            editDialog.close();
+        });
+
+        cancelButton.addEventListener('click', function() {
+            editDialog.close();
+        });
+
 
         const deleteButton = document.createElement('button');
         deleteButton.textContent = "+";
@@ -175,12 +210,12 @@ export function createProjectUI(project) {
     addProjectToList(project);
 
     //add project to new task form
-    const projectOptions = document.getElementById('project-select');
+    const projectOptions = document.getElementById('projectSelect');
     const projectOption = document.createElement('option');
     projectOption.setAttribute('value', project.name);
     projectOption.setAttribute('id', project.name);
     projectOption.textContent = project.name;
-    projectOptions.appendChild(projectOption);
+    projectOptions.append(projectOption);
 }
 
 export function showProject() {
@@ -205,7 +240,7 @@ export function showProject() {
 
     //add starting projects to new task form
     for (let i = 0; i < projectList.length; i++) {
-        const projectOptions = document.getElementById('project-select');
+        const projectOptions = document.getElementById('projectSelect');
         const foundProjectOption = projectOptions.querySelector(`#${projectList[i].name}`)
 
         if (!foundProjectOption) {
