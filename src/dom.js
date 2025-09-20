@@ -17,7 +17,7 @@ export const newTaskForm = function newTaskForm() {
         const description = document.getElementById('descriptionValue').value;
         const dueDate = document.getElementById('dueDateValue').value;
         const priority = document.querySelector('input[name="priorityChoice"]:checked').value;
-        const selectedProjectOption = document.getElementById('project-select').value;
+        const selectedProjectOption = document.getElementById('projectSelect').value;
 
         const newTask = new Task(taskName, description, dueDate, priority);
 
@@ -103,6 +103,15 @@ export const createTasks = function createTaskUI(project) {
         const editButton = document.createElement('button');
         editButton.textContent = "Edit";
         editButton.id = 'editButton';
+        editButton.addEventListener('click', function(event) {
+            const editDialog = document.getElementById('editDialog');
+
+            const taskName = document.getElementById('taskNameEdited').value;
+            const description = document.getElementById('descriptionEdited').value;
+            const dueDate = document.getElementById('dueDateEdited').value;
+            const priority = document.querySelector('input[name="priorityChoiceEdited"]:checked').value;
+            const selectedProjectOption = document.getElementById('projectSelectEdited').value;
+        });
 
         const deleteButton = document.createElement('button');
         deleteButton.textContent = "+";
@@ -177,6 +186,19 @@ export function createProjectUI(project) {
 export function showProject() {
     const selectedProject = document.getElementById('selectedProject');
     const projectsToClick = document.getElementById('projectsToClick');
+
+    /* editable div test
+    const main = document.querySelector('main');
+    const editableDiv = document.createElement('div');
+    editableDiv.textContent = 'Click here to edit this content.';
+    editableDiv.setAttribute('contenteditable', 'true'); // Make it editable
+    main.append(editableDiv);
+
+    editableDiv.addEventListener('blur', () => {
+        console.log('Content updated:', editableDiv.textContent);
+        // Here you would typically send the updated content to a server or store it.
+    });
+    */
 
     //create default 'general' project
     createTasks(projectList[0]);
