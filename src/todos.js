@@ -26,10 +26,6 @@ export class Task {
         this.completed = false;
     }
 
-    getTaskInfo() {
-        return `New task: ${this.taskName}, Description: ${this.description}, Due: ${this.dueDate}, Priority: ${this.priority}`
-    }
-
     taskComplete() {
         if (this.completed === false) {
             this.completed = true;
