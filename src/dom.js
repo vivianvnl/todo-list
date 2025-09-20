@@ -63,7 +63,7 @@ export const createTasks = function createTaskUI(project) {
         checkbox.addEventListener('change', function() {
             if (this.checked) {
                 currentProject[i].taskComplete();
-                
+
                 task.setAttribute('style', 'background-color: #D6D6D6');
                 if (dueDate) {
                     taskNameAndDueDate.removeChild(dueDate);
