@@ -12,22 +12,24 @@ export const newTaskForm = function newTaskForm() {
 
     createTaskBtn.addEventListener("click", (event) => {
         event.preventDefault();
-
+        
         const taskName = document.getElementById('taskNameValue').value;
         const description = document.getElementById('descriptionValue').value;
         const dueDate = document.getElementById('dueDateValue').value;
         const priority = document.querySelector('input[name="priorityChoice"]:checked').value;
+        const selectedProjectOption = document.getElementById('project-select').value;
 
         const newTask = new Task(taskName, description, dueDate, priority);
 
-        const selectedProject = document.getElementById('selectedProject');
-        const selectedProjectHeader = selectedProject.querySelector('h2');
-        const foundSelectedProject = projectList.find(project => project.name === selectedProjectHeader.textContent);
-
-        if (foundSelectedProject.name) {
+        const foundSelectedProject = projectList.find(project => project.name === selectedProjectOption);
+        
+        if (foundSelectedProject === undefined) {
+            projectList[0].addTaskToProject(newTask);
+            createTasks(projectList[0]);
+        } else {
             foundSelectedProject.addTaskToProject(newTask);
             createTasks(foundSelectedProject);
-        };
+        }
 
         taskDialog.close();
         taskForm.reset();
@@ -163,13 +165,36 @@ export function createProjectUI(project) {
     projectList.append(projectListItem);
 
     addProjectToList(project);
+
+    //add project to new task form
+    const projectOptions = document.getElementById('project-select');
+    const projectOption = document.createElement('option');
+    projectOption.setAttribute('value', project.name);
+    projectOption.setAttribute('id', project.name);
+    projectOption.textContent = project.name;
+    projectOptions.appendChild(projectOption);
 }
 
 export function showProject() {
     const selectedProject = document.getElementById('selectedProject');
     const projectsToClick = document.getElementById('projectsToClick');
 
+    //create default 'general' project
     createTasks(projectList[0]);
+
+    //add starting projects to new task form
+    for (let i = 0; i < projectList.length; i++) {
+        const projectOptions = document.getElementById('project-select');
+        const foundProjectOption = projectOptions.querySelector(`#${projectList[i].name}`)
+
+        if (!foundProjectOption) {
+            const projectOption = document.createElement('option');
+            projectOption.setAttribute('value', projectList[i].name);
+            projectOption.setAttribute('id', projectList[i].name);
+            projectOption.textContent = projectList[i].name;
+            projectOptions.appendChild(projectOption);
+        }
+    }
 
     projectsToClick.addEventListener('click', (event) => {
         selectedProject.innerHTML = '';

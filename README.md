@@ -15,8 +15,7 @@ Create a webapp where you can add to-do list tasks to different projects and add
 - delete tasks
 - checklist (cross off)
 
-- expand tasks
-- modify tasks
+- expand/modify tasks
 - new task lets you choose which project to add to
 
 - store task info in database

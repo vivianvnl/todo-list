@@ -15,7 +15,6 @@ createProjectUI(newProject);
 newProject.addTaskToProject(taskOne);
 newProject.addTaskToProject(taskTwo);
 newProject.addTaskToProject(taskThree);
-console.log(newProject.project);
 
 
 newTaskForm();
