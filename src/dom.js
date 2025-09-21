@@ -109,17 +109,23 @@ export const createTasks = function createTaskUI(project) {
             const taskNameEdited = document.getElementById('taskNameEdited');
             const descriptionEdited = document.getElementById('descriptionEdited');
             const dueDateEdited = document.getElementById('dueDateEdited');
-            //fix null value due to lack of priority options ?/project options
-            //const priorityChoiceEdited = document.querySelector('input[name="priorityChoiceEdited"]:checked').value;
+            //fix null value due to lack of project options ?
             const selectedProjectOptionEdited = document.getElementById('projectSelectEdited');
-            
-            console.log(document.querySelector('input[name="priorityChoiceEdited"]:checked').value);
 
             taskNameEdited.value = taskName.textContent;
             dueDateEdited.value = dueDate.textContent;
             descriptionEdited.value = description.textContent;
-            priorityChoiceEdited = currentProject[i].priority;
+            const currentPriority = currentProject[i].priority;
             selectedProjectOptionEdited.value = project.name;
+
+            const priorityChoiceEditedButtons = document.getElementsByName('priorityChoiceEdited');
+            console.log(priorityChoiceEditedButtons);
+            for (let i = 0; i < priorityChoiceEditedButtons.length; i++) {
+                if (priorityChoiceEditedButtons[i].value === currentPriority) {
+                    priorityChoiceEditedButtons[i].checked = true;
+                    break;
+                }
+            }
             
             editDialog.showModal();
         });
