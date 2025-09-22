@@ -46,6 +46,7 @@ export const createTasks = function createTaskUI(project) {
     for (let i = 0; i < currentProject.length; i++) {
         const task = document.createElement('div');
         task.id = 'task';
+        task.classList.add('tasks');
         if (currentProject[i].priority === 'high') {
             task.setAttribute('style', 'background-color: #ff8465ff');
         } else if (currentProject[i].priority === 'medium') {
@@ -104,58 +105,205 @@ export const createTasks = function createTaskUI(project) {
         editButton.textContent = "Edit";
         editButton.id = 'editButton';
 
-        const editDialog = document.getElementById('editDialog');
-        editButton.addEventListener('click', function (event) {
-            const taskNameEdited = document.getElementById('taskNameEdited');
-            const descriptionEdited = document.getElementById('descriptionEdited');
-            const dueDateEdited = document.getElementById('dueDateEdited');
-            const selectedProjectOptionEdited = document.getElementById('projectSelectEdited');
+        function createEditDialog() {
+            const editDialog = document.createElement('dialog');
+            editDialog.id = 'editDialog';
 
-            const projectName = selectedProject.querySelector('h2').innerHTML;
-            //const currentlySelectedProject = projectList.find(project => project.name === projectName);
+            const editDialogHeader = document.createElement('h2');
+            editDialogHeader.textContent = 'Edit Task';
+            const editTaskForm = document.createElement('form');
+            editTaskForm.id = 'editTaskForm';
+            const fieldset = document.createElement('fieldset');
 
-            taskNameEdited.value = taskName.textContent;
-            dueDateEdited.value = dueDate.textContent;
-            descriptionEdited.value = description.textContent;
-            const currentPriority = currentProject[i].priority;
-            selectedProjectOptionEdited.value = projectName;
-            console.log(projectName);
-            console.log(selectedProjectOptionEdited);
+            const taskNameEditedDiv = document.createElement('div');
+            const taskNameEditedLabel = document.createElement('label');
+            taskNameEditedLabel.textContent = 'Task Name:';
+            taskNameEditedLabel.setAttribute('for', 'taskNameEdited');
+            const taskNameEditedInput = document.createElement('input');
+            taskNameEditedInput.setAttribute('type', 'text');
+            taskNameEditedInput.setAttribute('name', 'taskName');
+            taskNameEditedInput.setAttribute('id', 'taskNameEdited');
+            taskNameEditedDiv.append(taskNameEditedLabel, taskNameEditedInput);
 
-            const priorityChoiceEditedButtons = document.getElementsByName('priorityChoiceEdited');
-            for (let i = 0; i < priorityChoiceEditedButtons.length; i++) {
-                if (priorityChoiceEditedButtons[i].value === currentPriority) {
-                    priorityChoiceEditedButtons[i].checked = true;
-                    break;
-                }
+            const descriptionEditedDiv = document.createElement('div');
+            const descriptionEditedLabel = document.createElement('label');
+            descriptionEditedLabel.textContent = 'Description:';
+            descriptionEditedLabel.setAttribute('for', 'descriptionEdited');
+            const descriptionEditedInput = document.createElement('input');
+            descriptionEditedInput.setAttribute('type', 'text');
+            descriptionEditedInput.setAttribute('name', 'description');
+            descriptionEditedInput.setAttribute('id', 'descriptionEdited');
+            descriptionEditedDiv.append(descriptionEditedLabel, descriptionEditedInput);
+
+            const dueDateEditedDiv = document.createElement('div');
+            const dueDateEditedLabel = document.createElement('label');
+            dueDateEditedLabel.textContent = 'Due Date:';
+            dueDateEditedLabel.setAttribute('for', 'dueDateEdited');
+            const dueDateEditedInput = document.createElement('input');
+            dueDateEditedInput.setAttribute('type', 'text');
+            dueDateEditedInput.setAttribute('name', 'dueDate');
+            dueDateEditedInput.setAttribute('id', 'dueDateEdited');
+            dueDateEditedDiv.append(dueDateEditedLabel, dueDateEditedInput);
+
+
+            const priorityCategoryEditedDiv = document.createElement('div');
+            const priorityCategoryEditedLabel = document.createElement('p');
+            priorityCategoryEditedLabel.textContent = 'Priority Level:';
+            const priorityChoicesEditedDiv = document.createElement('div');
+            priorityChoicesEditedDiv.classList.add('priorityChoices');
+
+            const priorityChoiceHighEditedDiv = document.createElement('div');
+            priorityChoiceHighEditedDiv.id = 'priorityChoiceHighEditedDiv';
+            const priorityChoiceHighEditedInput = document.createElement('input');
+            priorityChoiceHighEditedInput.setAttribute('type', 'radio');
+            priorityChoiceHighEditedInput.setAttribute('name', 'priorityChoiceEdited');
+            priorityChoiceHighEditedInput.setAttribute('id', 'optionHigh');
+            priorityChoiceHighEditedInput.setAttribute('value', 'high');
+            const priorityChoiceHighEditedLabel = document.createElement('label');
+            priorityChoiceHighEditedLabel.textContent = 'High';
+            priorityChoiceHighEditedLabel.setAttribute('for', 'optionHigh');
+            priorityChoiceHighEditedDiv.append(priorityChoiceHighEditedInput, priorityChoiceHighEditedLabel);
+            
+            const priorityChoiceMediumEditedDiv = document.createElement('div');
+            priorityChoiceMediumEditedDiv.id = 'priorityChoiceMediumEditedDiv';
+            const priorityChoiceMediumEditedInput = document.createElement('input');
+            priorityChoiceMediumEditedInput.setAttribute('type', 'radio');
+            priorityChoiceMediumEditedInput.setAttribute('name', 'priorityChoiceEdited');
+            priorityChoiceMediumEditedInput.setAttribute('id', 'optionMedium');
+            priorityChoiceMediumEditedInput.setAttribute('value', 'medium');
+            const priorityChoiceMediumEditedLabel = document.createElement('label');
+            priorityChoiceMediumEditedLabel.textContent = 'Medium';
+            priorityChoiceMediumEditedLabel.setAttribute('for', 'optionMedium');
+            priorityChoiceMediumEditedDiv.append(priorityChoiceMediumEditedInput, priorityChoiceMediumEditedLabel);
+
+            const priorityChoiceLowEditedDiv = document.createElement('div');
+            priorityChoiceLowEditedDiv.id = 'priorityChoiceLowEditedDiv';
+            const priorityChoiceLowEditedInput = document.createElement('input');
+            priorityChoiceLowEditedInput.setAttribute('type', 'radio');
+            priorityChoiceLowEditedInput.setAttribute('name', 'priorityChoiceEdited');
+            priorityChoiceLowEditedInput.setAttribute('id', 'optionLow');
+            priorityChoiceLowEditedInput.setAttribute('value', 'low');
+            const priorityChoiceLowEditedLabel = document.createElement('label');
+            priorityChoiceLowEditedLabel.textContent = 'Low';
+            priorityChoiceLowEditedLabel.setAttribute('for', 'optionLow');
+            priorityChoiceLowEditedDiv.append(priorityChoiceLowEditedInput, priorityChoiceLowEditedLabel);
+
+            priorityChoicesEditedDiv.append(priorityChoiceHighEditedDiv, priorityChoiceMediumEditedDiv, priorityChoiceLowEditedDiv);
+            priorityCategoryEditedDiv.append(priorityCategoryEditedLabel, priorityChoicesEditedDiv);
+
+            const projectSelectEditedDiv = document.createElement('div');
+            const projectSelectEditedLabel = document.createElement('label');
+            projectSelectEditedLabel.textContent = 'Choose a project:';
+            projectSelectEditedLabel.setAttribute('for', 'projectSelectEdited');
+            const projectSelectEditedSelect = document.createElement('select');
+            projectSelectEditedSelect.setAttribute('name', 'selectedProjectOptionEdited');
+            projectSelectEditedSelect.setAttribute('id', 'projectSelectEdited');
+
+            const projectSelectEditedDefaultOption = document.createElement('option');
+            projectSelectEditedDefaultOption.setAttribute('value', '');
+            projectSelectEditedDefaultOption.textContent = 'Please select:';
+            projectSelectEditedSelect.append(projectSelectEditedDefaultOption);
+
+            for (let i = 0; i < projectList.length; i++) {
+                const projectOptionEditDialog = document.createElement('option');
+                projectOptionEditDialog.setAttribute('value', project.name);
+                projectOptionEditDialog.setAttribute('id', project.name);
+                projectOptionEditDialog.textContent = project.name;
+                projectSelectEditedSelect.append(projectOptionEditDialog);
             }
+            projectSelectEditedDiv.append(projectSelectEditedLabel, projectSelectEditedSelect);
 
-            editDialog.showModal();
-        });
+            fieldset.append(taskNameEditedDiv, descriptionEditedDiv, dueDateEditedDiv, priorityCategoryEditedDiv, projectSelectEditedDiv);
 
-        const editForm = document.getElementById('editTaskForm');
-        const cancelButton = document.getElementById('cancelButton');
+
+            const dialogButtons = document.createElement('div');
+            const cancelButton = document.createElement('button');
+            cancelButton.setAttribute('value', 'cancel');
+            cancelButton.setAttribute('formmethod', 'dialog');
+            cancelButton.id = 'cancelButton';
+            cancelButton.textContent = 'Cancel';
+            const editTaskButton = document.createElement('button');
+            editTaskButton.setAttribute('type', 'submit');
+            editTaskButton.setAttribute('value', 'default');
+            editTaskButton.id = 'editTaskButton';
+            editTaskButton.textContent = 'Save';
+
+            dialogButtons.append(cancelButton, editTaskButton);
+
+
+            editTaskForm.append(fieldset, dialogButtons);
+            editDialog.append(editDialogHeader, editTaskForm);
+
+            document.body.appendChild(editDialog);
+
+            editButton.addEventListener('click', function (event) {
+                const projectName = selectedProject.querySelector('h2').innerHTML;
+
+                taskNameEditedInput.value = taskName.textContent;
+                dueDateEditedInput.value = dueDate.textContent;
+                descriptionEditedInput.value = description.textContent;
+                projectSelectEditedSelect.value = projectName;
+
+                const currentPriority = currentProject[i].priority;
+                console.log(currentPriority);
+                //fix
+                if (currentPriority === 'high') {
+                    const highPriority = document.getElementById('optionHigh');
+                    console.log(highPriority);
+                    highPriority.checked = true;
+                } else if (currentPriority === 'medium') {
+                    const mediumPriority = document.getElementById('optionMedium');
+                    console.log(mediumPriority.checked);
+                    mediumPriority.checked = true;
+                    console.log(mediumPriority.checked);
+                } else if (currentPriority === 'low') {
+                    const lowPriority = document.getElementById('optionLow');
+                    console.log(lowPriority);
+                    lowPriority.checked = true;
+                }
+                
+
+                const priorityChoiceEditedButtons = document.getElementsByName('priorityChoiceEdited');
+
+                for (let i = 0; i < priorityChoiceEditedButtons.length; i++) {
+                    if (priorityChoiceEditedButtons[i].value === currentPriority) {
+                        priorityChoiceEditedButtons[i].checked = true;
+                        break;
+                    }
+                }
+
+                editDialog.showModal();
+            });
+        }
+        createEditDialog();
+
+        //const editForm = document.getElementById('editTaskForm');
+        //const cancelButton = document.getElementById('cancelButton');
 
         //editForm.addEventListener('submit', function (event) {
-        //event.preventDefault(); // Prevent default form submission
-        //
-        //taskName.textContent = document.getElementById('taskNameEdited').value;
-        //dueDate.textContent = document.getElementById('taskNameEdited').value;
-        //description.textContent = document.getElementById('taskNameEdited').value;
-        ////check if working
-        //currentProject[i].priority = document.querySelector('input[name="priorityChoiceEdited"]:checked').value;
-        //
-        ////check if working
-        //const selectedProjectOptionEdited = document.getElementById('projectSelectEdited').value;
-        //const foundSelectedProject = projectList.find(project => project.name === selectedProjectOptionEdited);
-        //project = foundSelectedProject;
-        //
-        //editDialog.close();
+            //event.preventDefault();
+//            
+            //let currentTask = currentProject.find(task => task.taskName === taskNameEdited.value);
+//
+            //console.log(currentTask);
+//
+            //currentProject[i].taskName = document.getElementById('taskNameEdited').value;
+            //currentProject[i].dueDate = document.getElementById('dueDateEdited').value;
+            //currentProject[i].description = document.getElementById('descriptionEdited').value;
+            //////check if working
+            ////currentProject[i].priority = document.querySelector('input[name="priorityChoiceEdited"]:checked').value;
+            ////console.log(currentProject[i].taskName);
+            //////check if working
+            ////const selectedProjectOptionEdited = document.getElementById('projectSelectEdited').value;
+            ////const foundSelectedProject = projectList.find(project => project.name === selectedProjectOptionEdited);
+            ////project = foundSelectedProject;
+//            
+            //editDialog.close();
         //});
 
-        cancelButton.addEventListener('click', function () {
-            editDialog.close();
-        });
+        //cancelButton.addEventListener('click', function () {
+            //editDialog.close();
+        //});
 
 
         const deleteButton = document.createElement('button');
@@ -223,18 +371,12 @@ export function createProjectUI(project) {
 
     //add project to new task form
     const projectOptions = document.getElementById('projectSelect');
-    const projectOptionsEditDialog = document.getElementById('projectSelectEdited');
 
     const projectOption = document.createElement('option');
     projectOption.setAttribute('value', project.name);
     projectOption.setAttribute('id', project.name);
     projectOption.textContent = project.name;
     projectOptions.append(projectOption);
-
-    //add project to edit dialog on each task
-    const projectOptionEditDialog = projectOption.cloneNode(true);
-    projectOptionEditDialog.setAttribute('id', project.name);
-    projectOptionsEditDialog.append(projectOptionEditDialog);
 }
 
 export function showProject() {
