@@ -12,7 +12,7 @@ export const newTaskForm = function newTaskForm() {
 
     createTaskBtn.addEventListener("click", (event) => {
         event.preventDefault();
-        
+
         const taskName = document.getElementById('taskNameValue').value;
         const description = document.getElementById('descriptionValue').value;
         const dueDate = document.getElementById('dueDateValue').value;
@@ -22,7 +22,7 @@ export const newTaskForm = function newTaskForm() {
         const newTask = new Task(taskName, description, dueDate, priority);
 
         const foundSelectedProject = projectList.find(project => project.name === selectedProjectOption);
-        
+
         if (foundSelectedProject === undefined) {
             projectList[0].addTaskToProject(newTask);
             createTasks(projectList[0]);
@@ -59,8 +59,8 @@ export const createTasks = function createTaskUI(project) {
         crossOff.setAttribute("id", "crossOff");
         checkbox.setAttribute("type", "checkbox");
         checkbox.setAttribute("id", "checkbox");
-        
-        checkbox.addEventListener('change', function() {
+
+        checkbox.addEventListener('change', function () {
             if (this.checked) {
                 currentProject[i].taskComplete();
 
@@ -105,51 +105,55 @@ export const createTasks = function createTaskUI(project) {
         editButton.id = 'editButton';
 
         const editDialog = document.getElementById('editDialog');
-        editButton.addEventListener('click', function(event) {
+        editButton.addEventListener('click', function (event) {
             const taskNameEdited = document.getElementById('taskNameEdited');
             const descriptionEdited = document.getElementById('descriptionEdited');
             const dueDateEdited = document.getElementById('dueDateEdited');
-            //fix null value due to lack of project options ?
             const selectedProjectOptionEdited = document.getElementById('projectSelectEdited');
+
+            const projectName = selectedProject.querySelector('h2').innerHTML;
+            //const currentlySelectedProject = projectList.find(project => project.name === projectName);
 
             taskNameEdited.value = taskName.textContent;
             dueDateEdited.value = dueDate.textContent;
             descriptionEdited.value = description.textContent;
             const currentPriority = currentProject[i].priority;
-            selectedProjectOptionEdited.value = project.name;
+            selectedProjectOptionEdited.value = projectName;
+            console.log(projectName);
+            console.log(selectedProjectOptionEdited);
 
             const priorityChoiceEditedButtons = document.getElementsByName('priorityChoiceEdited');
-            console.log(priorityChoiceEditedButtons);
             for (let i = 0; i < priorityChoiceEditedButtons.length; i++) {
                 if (priorityChoiceEditedButtons[i].value === currentPriority) {
                     priorityChoiceEditedButtons[i].checked = true;
                     break;
                 }
             }
-            
+
             editDialog.showModal();
         });
 
         const editForm = document.getElementById('editTaskForm');
         const cancelButton = document.getElementById('cancelButton');
 
-        editForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
+        //editForm.addEventListener('submit', function (event) {
+        //event.preventDefault(); // Prevent default form submission
+        //
+        //taskName.textContent = document.getElementById('taskNameEdited').value;
+        //dueDate.textContent = document.getElementById('taskNameEdited').value;
+        //description.textContent = document.getElementById('taskNameEdited').value;
+        ////check if working
+        //currentProject[i].priority = document.querySelector('input[name="priorityChoiceEdited"]:checked').value;
+        //
+        ////check if working
+        //const selectedProjectOptionEdited = document.getElementById('projectSelectEdited').value;
+        //const foundSelectedProject = projectList.find(project => project.name === selectedProjectOptionEdited);
+        //project = foundSelectedProject;
+        //
+        //editDialog.close();
+        //});
 
-            taskName.textContent = document.getElementById('taskNameEdited').value;
-            dueDate.textContent = document.getElementById('taskNameEdited').value;
-            description.textContent = document.getElementById('taskNameEdited').value;
-            currentProject[i].priority = document.querySelector('input[name="priorityChoiceEdited"]:checked').value;
-            
-            //check if working
-            const selectedProjectOptionEdited = document.getElementById('projectSelectEdited').value;
-            const foundSelectedProject = projectList.find(project => project.name === selectedProjectOptionEdited);
-            project = foundSelectedProject;
-
-            editDialog.close();
-        });
-
-        cancelButton.addEventListener('click', function() {
+        cancelButton.addEventListener('click', function () {
             editDialog.close();
         });
 
@@ -157,8 +161,10 @@ export const createTasks = function createTaskUI(project) {
         const deleteButton = document.createElement('button');
         deleteButton.textContent = "+";
         deleteButton.id = 'deleteButton';
-        deleteButton.addEventListener('click', function() {
-            this.parentElement.remove(); 
+
+        deleteButton.addEventListener('click', function () {
+            console.log(this.parentElement);
+            this.parentElement.remove();
             currentProject.splice([i], 1);
             console.log(currentProject);
         });
@@ -169,14 +175,14 @@ export const createTasks = function createTaskUI(project) {
         if (currentProject[i].completed === false) {
             taskNameAndDueDate.append(taskName, dueDate);
         } else if (currentProject[i].completed === true) {
-                checkbox.checked = true;
-                console.log(currentProject[i].completed);
-                task.setAttribute('style', 'background-color: #D6D6D6');
-                if (dueDate) {
-                    taskNameAndDueDate.append(taskName);
-                }
-                task.append(crossOff);
-        } 
+            checkbox.checked = true;
+            console.log(currentProject[i].completed);
+            task.setAttribute('style', 'background-color: #D6D6D6');
+            if (dueDate) {
+                taskNameAndDueDate.append(taskName);
+            }
+            task.append(crossOff);
+        }
 
         task.append(checkbox, taskNameAndDueDate, description, editButton, deleteButton);
         selectedProject.append(task);
@@ -217,46 +223,26 @@ export function createProjectUI(project) {
 
     //add project to new task form
     const projectOptions = document.getElementById('projectSelect');
+    const projectOptionsEditDialog = document.getElementById('projectSelectEdited');
+
     const projectOption = document.createElement('option');
     projectOption.setAttribute('value', project.name);
     projectOption.setAttribute('id', project.name);
     projectOption.textContent = project.name;
     projectOptions.append(projectOption);
+
+    //add project to edit dialog on each task
+    const projectOptionEditDialog = projectOption.cloneNode(true);
+    projectOptionEditDialog.setAttribute('id', project.name);
+    projectOptionsEditDialog.append(projectOptionEditDialog);
 }
 
 export function showProject() {
     const selectedProject = document.getElementById('selectedProject');
     const projectsToClick = document.getElementById('projectsToClick');
 
-    /* editable div test
-    const main = document.querySelector('main');
-    const editableDiv = document.createElement('div');
-    editableDiv.textContent = 'Click here to edit this content.';
-    editableDiv.setAttribute('contenteditable', 'true'); // Make it editable
-    main.append(editableDiv);
-
-    editableDiv.addEventListener('blur', () => {
-        console.log('Content updated:', editableDiv.textContent);
-        // Here you would typically send the updated content to a server or store it.
-    });
-    */
-
     //create default 'general' project
     createTasks(projectList[0]);
-
-    //add starting projects to new task form
-    for (let i = 0; i < projectList.length; i++) {
-        const projectOptions = document.getElementById('projectSelect');
-        const foundProjectOption = projectOptions.querySelector(`#${projectList[i].name}`)
-
-        if (!foundProjectOption) {
-            const projectOption = document.createElement('option');
-            projectOption.setAttribute('value', projectList[i].name);
-            projectOption.setAttribute('id', projectList[i].name);
-            projectOption.textContent = projectList[i].name;
-            projectOptions.appendChild(projectOption);
-        }
-    }
 
     projectsToClick.addEventListener('click', (event) => {
         selectedProject.innerHTML = '';
@@ -267,7 +253,7 @@ export function showProject() {
             if (foundProject.project.length > 0) {
                 createTasks(foundProject);
             } else if (foundProject.project.length === 0) {
-            selectedProject.innerHTML = `
+                selectedProject.innerHTML = `
             <h2>${foundProject.name}</h2>
             `;
             }
