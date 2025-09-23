@@ -21,6 +21,7 @@ export const newTaskForm = function newTaskForm() {
         const taskName = document.getElementById('taskNameValue').value;
         const description = document.getElementById('descriptionValue').value;
         const dueDate = document.getElementById('dueDateValue').value;
+
         let priority = null;
         if (document.querySelector('input[name="priorityChoice"]:checked') !== null) {
             priority = document.querySelector('input[name="priorityChoice"]:checked').value;
@@ -29,7 +30,7 @@ export const newTaskForm = function newTaskForm() {
 
         if (taskName !== '' && priority !== null) {
             const newTask = new Task(taskName, description, dueDate, priority);
-            
+
             const foundSelectedProject = projectList.find(project => project.name === selectedProjectOption);
 
             if (foundSelectedProject === undefined) {
