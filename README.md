@@ -10,17 +10,16 @@ Create a webapp where you can add to-do list tasks to different projects and add
 - view created tasks in DOM
 - switch between projects and their tasks
   - task part of project content html
+    - create array of projects and iterate over them to see if target event id is == to a project's variable name in array and if so, display that project's contents in selectedProject div
   - remove html and replace with another project's html when project clicked in nav --using event.target.id
 - priority level
 - delete tasks
 - checklist (cross off)
 - new task lets you choose which project to add to
-
 - expand/modify tasks
+
 - add date/time package
 
 - store task info in database
   - view database
 - check browser refresh
-
-- create array of projects and iterate over them to see if target event id is == to a project's variable name in array and if so, display that project's contents in selectedProject div
