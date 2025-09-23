@@ -383,6 +383,7 @@ export function newProjectForm() {
         const projectName = document.getElementById('projectNameValue').value;
         if (projectName !== '') {
             const newProject = new Project(projectName);
+            addProjectToList(newProject);
 
             projectDialog.close();
             projectForm.reset();
@@ -408,8 +409,6 @@ export function createProjectUI(project) {
     projectListItem.classList.add('projectButtons');
     projectList.append(projectListItem);
 
-    addProjectToList(project);
-
     //add project to new task form
     const projectOptions = document.getElementById('projectSelect');
 
@@ -428,6 +427,7 @@ export function showProject() {
     //show existing projects
     for (let i = 0; i < projectList.length; i++) {
         if (projectList[i].project.length > 0) {
+            createProjectUI(projectList[i]);
             createTasks(projectList[i]);
         }
     }
