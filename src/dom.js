@@ -203,14 +203,6 @@ export const createTasks = function createTaskUI(project) {
             projectSelectEditedDefaultOption.setAttribute('value', '');
             projectSelectEditedDefaultOption.textContent = 'Please select:';
             projectSelectEditedSelect.append(projectSelectEditedDefaultOption);
-
-            for (let i = 0; i < projectList.length; i++) {
-                const projectOptionEditDialog = document.createElement('option');
-                projectOptionEditDialog.setAttribute('value', project.name);
-                projectOptionEditDialog.setAttribute('id', project.name);
-                projectOptionEditDialog.textContent = project.name;
-                projectSelectEditedSelect.append(projectOptionEditDialog);
-            }
             projectSelectEditedDiv.append(projectSelectEditedLabel, projectSelectEditedSelect);
 
             fieldset.append(taskNameEditedDiv, descriptionEditedDiv, dueDateEditedDiv, priorityCategoryEditedDiv, projectSelectEditedDiv);
@@ -236,34 +228,27 @@ export const createTasks = function createTaskUI(project) {
 
             document.body.appendChild(editDialog);
 
+            let currentPriority = currentProject[i].priority;
+            const priorityChoiceEditedButtons = editDialog.querySelectorAll('[name="priorityChoiceEdited"]');
+            const projectName = selectedProject.querySelector('h2').innerHTML;
+
             editButton.addEventListener('click', function (event) {
-                const projectName = selectedProject.querySelector('h2').innerHTML;
+                //add created projects to edit dialog
+                for (let i = 0; i < projectList.length; i++) {
+                    const foundProjectEditDialog = projectSelectEditedSelect.querySelector(`#${projectList[i].name}`);
+                    if (!foundProjectEditDialog) {
+                        const projectOptionEditDialog = document.createElement('option');
+                        projectOptionEditDialog.setAttribute('value', projectList[i].name);
+                        projectOptionEditDialog.setAttribute('id', projectList[i].name);
+                        projectOptionEditDialog.textContent = projectList[i].name;
+                        projectSelectEditedSelect.append(projectOptionEditDialog);
+                    }
+                }
 
                 taskNameEditedInput.value = taskName.textContent;
                 dueDateEditedInput.value = dueDate.textContent;
                 descriptionEditedInput.value = description.textContent;
                 projectSelectEditedSelect.value = projectName;
-
-                const currentPriority = currentProject[i].priority;
-                console.log(currentPriority);
-                //fix
-                if (currentPriority === 'high') {
-                    const highPriority = document.getElementById('optionHigh');
-                    console.log(highPriority);
-                    highPriority.checked = true;
-                } else if (currentPriority === 'medium') {
-                    const mediumPriority = document.getElementById('optionMedium');
-                    console.log(mediumPriority.checked);
-                    mediumPriority.checked = true;
-                    console.log(mediumPriority.checked);
-                } else if (currentPriority === 'low') {
-                    const lowPriority = document.getElementById('optionLow');
-                    console.log(lowPriority);
-                    lowPriority.checked = true;
-                }
-                
-
-                const priorityChoiceEditedButtons = document.getElementsByName('priorityChoiceEdited');
 
                 for (let i = 0; i < priorityChoiceEditedButtons.length; i++) {
                     if (priorityChoiceEditedButtons[i].value === currentPriority) {
@@ -271,39 +256,54 @@ export const createTasks = function createTaskUI(project) {
                         break;
                     }
                 }
-
                 editDialog.showModal();
+            });
+
+            editTaskForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                taskName.textContent = taskNameEditedInput.value;
+                currentProject[i].taskName = taskName.textContent;
+                dueDate.textContent = dueDateEditedInput.value;
+                currentProject[i].dueDate = dueDate.textContent;
+                description.textContent = descriptionEditedInput.value;
+                currentProject[i].description = description.textContent;
+
+                for (let i = 0; i < priorityChoiceEditedButtons.length; i++) {
+                    if (priorityChoiceEditedButtons[i].checked === true) {
+                        currentPriority = priorityChoiceEditedButtons[i].value;
+
+                        if (currentPriority === 'high') {
+                            task.setAttribute('style', 'background-color: #ff8465ff');
+                        } else if (currentPriority === 'medium') {
+                            task.setAttribute('style', 'background-color: #FFBF65');
+                        } else if (currentPriority === 'low') {
+                            task.setAttribute('style', 'background-color: #B8E85F');
+                        }
+                        break;
+                    }
+                }
+                currentProject[i].priority = currentPriority;
+
+                if (projectSelectEditedSelect.value === '') {
+                    projectSelectEditedSelect.value = projectName;
+                }
+                
+                if (projectSelectEditedSelect.value !== projectName && projectSelectEditedSelect.value !== '') {
+                    const projectToAppendTask = projectList.find(project => project.name === projectSelectEditedSelect.value);
+                    const [taskToMove] = currentProject.splice([i], 1);
+                    projectToAppendTask.addTaskToProject(taskToMove);
+                    createTasks(project);
+                }
+                editDialog.close();
+            });
+
+            cancelButton.addEventListener('click', function () {
+                editDialog.close();
             });
         }
         createEditDialog();
 
-        //const editForm = document.getElementById('editTaskForm');
-        //const cancelButton = document.getElementById('cancelButton');
-
-        //editForm.addEventListener('submit', function (event) {
-            //event.preventDefault();
-//            
-            //let currentTask = currentProject.find(task => task.taskName === taskNameEdited.value);
-//
-            //console.log(currentTask);
-//
-            //currentProject[i].taskName = document.getElementById('taskNameEdited').value;
-            //currentProject[i].dueDate = document.getElementById('dueDateEdited').value;
-            //currentProject[i].description = document.getElementById('descriptionEdited').value;
-            //////check if working
-            ////currentProject[i].priority = document.querySelector('input[name="priorityChoiceEdited"]:checked').value;
-            ////console.log(currentProject[i].taskName);
-            //////check if working
-            ////const selectedProjectOptionEdited = document.getElementById('projectSelectEdited').value;
-            ////const foundSelectedProject = projectList.find(project => project.name === selectedProjectOptionEdited);
-            ////project = foundSelectedProject;
-//            
-            //editDialog.close();
-        //});
-
-        //cancelButton.addEventListener('click', function () {
-            //editDialog.close();
-        //});
 
 
         const deleteButton = document.createElement('button');
