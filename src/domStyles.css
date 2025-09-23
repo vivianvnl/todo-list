@@ -172,3 +172,19 @@ input[type='text'] {
     flex-direction: column;
     align-items: flex-start;
 }
+
+input[type="text"]:required:invalid {
+    border: 2px solid rgb(255, 91, 70);
+    background-color: #ffe0e0;
+    box-shadow: 0 0 2px rgb(255, 91, 70);
+}
+
+input:required:valid {
+    border: 2px solid rgb(0, 170, 0);
+    background-color: #dcffcc;
+}
+
+.required:after {
+  content: " *";
+  color: rgb(255, 91, 70);
+}

@@ -10,29 +10,54 @@ export const newTaskForm = function newTaskForm() {
         taskDialog.showModal();
     });
 
+    const form = document.getElementById('newTaskForm');
+    const nullErrorMessage = document.createElement('legend');
+    nullErrorMessage.textContent = 'Please fill out fields.';
+    const requiredErrorMessage = document.createElement('legend');
+    requiredErrorMessage.textContent = 'Please fill out required fields.';
     createTaskBtn.addEventListener("click", (event) => {
         event.preventDefault();
 
         const taskName = document.getElementById('taskNameValue').value;
         const description = document.getElementById('descriptionValue').value;
         const dueDate = document.getElementById('dueDateValue').value;
-        const priority = document.querySelector('input[name="priorityChoice"]:checked').value;
+        let priority = null;
+        if (document.querySelector('input[name="priorityChoice"]:checked') !== null) {
+            priority = document.querySelector('input[name="priorityChoice"]:checked').value;
+        }
         const selectedProjectOption = document.getElementById('projectSelect').value;
 
-        const newTask = new Task(taskName, description, dueDate, priority);
+        if (taskName !== '' && priority !== null) {
+            const newTask = new Task(taskName, description, dueDate, priority);
+            
+            const foundSelectedProject = projectList.find(project => project.name === selectedProjectOption);
 
-        const foundSelectedProject = projectList.find(project => project.name === selectedProjectOption);
+            if (foundSelectedProject === undefined) {
+                projectList[0].addTaskToProject(newTask);
+                createTasks(projectList[0]);
+            } else {
+                foundSelectedProject.addTaskToProject(newTask);
+                createTasks(foundSelectedProject);
+            }
 
-        if (foundSelectedProject === undefined) {
-            projectList[0].addTaskToProject(newTask);
-            createTasks(projectList[0]);
-        } else {
-            foundSelectedProject.addTaskToProject(newTask);
-            createTasks(foundSelectedProject);
-        }
-
+            taskDialog.close();
+            taskForm.reset();   
+        } else if (taskName === '' && description === '' && dueDate === '' && priority === null && selectedProjectOption === '') {
+            if (form.contains(nullErrorMessage) === false) {
+                form.append(nullErrorMessage);
+            }
+        } else if (taskName === '' || priority === null) {
+            if (form.contains(requiredErrorMessage) === false) {
+                if (form.contains(nullErrorMessage) === true) {
+                form.removeChild(nullErrorMessage);
+            }
+                form.append(requiredErrorMessage);
+            }
+        }      
+    });
+    const cancelNewTaskButton = document.getElementById('cancelNewTaskButton');
+    cancelNewTaskButton.addEventListener('click', function () {
         taskDialog.close();
-        taskForm.reset();
     });
 }
 
@@ -315,10 +340,8 @@ export const createTasks = function createTaskUI(project) {
         deleteButton.id = 'deleteButton';
 
         deleteButton.addEventListener('click', function () {
-            console.log(this.parentElement);
             this.parentElement.remove();
             currentProject.splice([i], 1);
-            console.log(currentProject);
         });
 
         const taskNameAndDueDate = document.createElement('div');
@@ -328,7 +351,7 @@ export const createTasks = function createTaskUI(project) {
             taskNameAndDueDate.append(taskName, dueDate);
         } else if (currentProject[i].completed === true) {
             checkbox.checked = true;
-            console.log(currentProject[i].completed);
+
             task.setAttribute('style', 'background-color: #D6D6D6');
             if (dueDate) {
                 taskNameAndDueDate.append(taskName);
@@ -351,15 +374,28 @@ export function newProjectForm() {
         projectDialog.showModal();
     });
 
+    const nullErrorMessage = document.createElement('legend');
+    nullErrorMessage.textContent = 'Please fill out field.';
     createProjectButton.addEventListener("click", (event) => {
         event.preventDefault();
 
         const projectName = document.getElementById('projectNameValue').value;
-        const newProject = new Project(projectName);
+        if (projectName !== '') {
+            const newProject = new Project(projectName);
 
+            projectDialog.close();
+            projectForm.reset();
+            return createProjectUI(newProject);
+        } else {
+            if (projectForm.contains(nullErrorMessage) === false) {
+                projectForm.append(nullErrorMessage);
+            }
+        }
+    });
+
+    const cancelNewProjectButton = document.getElementById('cancelNewProjectButton');
+    cancelNewProjectButton.addEventListener('click', function () {
         projectDialog.close();
-        projectForm.reset();
-        return createProjectUI(newProject);
     });
 }
 
