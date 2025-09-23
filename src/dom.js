@@ -424,8 +424,13 @@ export function showProject() {
     const selectedProject = document.getElementById('selectedProject');
     const projectsToClick = document.getElementById('projectsToClick');
 
-    //create default 'general' project
-    createTasks(projectList[0]);
+    console.log(projectList.length);
+    //show existing projects
+    for (let i = 0; i < projectList.length; i++) {
+        if (projectList[i].project.length > 0) {
+            createTasks(projectList[i]);
+        }
+    }
 
     projectsToClick.addEventListener('click', (event) => {
         selectedProject.innerHTML = '';

@@ -18,8 +18,6 @@ Create a webapp where you can add to-do list tasks to different projects and add
 - new task lets you choose which project to add to
 - expand/modify tasks
 
-- add date/time package
-
 - store task info in database
   - view database
 - check browser refresh

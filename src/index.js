@@ -1,6 +1,7 @@
 import "./globalStyles.css";
 import "./domStyles.css";
 
+//import { storageAvailable } from './storage.js';
 import { Project, Task } from './todos.js';
 import { newTaskForm, newProjectForm, showProject, createProjectUI } from './dom.js';
 

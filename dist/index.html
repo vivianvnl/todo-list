@@ -10,12 +10,12 @@
         <div>
             <dialog id="newTaskDialog">
                 <div class="dialog-div">
-                    <form id="newTaskForm" method="dialog">
+                    <form id="newTaskForm" method="dialog" >
                         <legend>Add a Task!</legend>
                         <fieldset>
                             <div>
-                                <label for="taskNameValue">Task Name:</label>
-                                <input type="text" name="taskName" id="taskNameValue">
+                                <label for="taskNameValue" class="required">Task Name:</label>
+                                <input type="text" name="taskName" id="taskNameValue" required>
                             </div>
                             <div>
                                 <label for="descriptionValue">Description:</label>
@@ -25,17 +25,17 @@
                                 <label for="dueDateValue">Due Date:</label>
                                 <input type="text" name="dueDate" id="dueDateValue">
                             </div>
-                            <p>Priority Level:</p>
+                            <p class="required">Priority Level:</p>
                             <div>
-                                <input type="radio" name="priorityChoice" id="optionHigh" value="high">
+                                <input type="radio" name="priorityChoice" id="optionHigh" value="high" required>
                                 <label class="priorityChoice" for="optionHigh">High</label>
                             </div>
                             <div>
-                                <input type="radio" name="priorityChoice" id="optionMedium" value="medium">
+                                <input type="radio" name="priorityChoice" id="optionMedium" value="medium" required>
                                 <label class="priorityChoice" for="optionMedium">Medium</label>
                             </div>
                             <div>
-                                <input type="radio" name="priorityChoice" id="optionLow" value="low">
+                                <input type="radio" name="priorityChoice" id="optionLow" value="low" required>
                                 <label class="priorityChoice" for="optionLow">Low</label>
                             </div>
                             <div>
@@ -47,7 +47,7 @@
                         </fieldset>
 
                         <div id="dialogButtons">
-                            <button value="cancel" formmethod="dialog">Cancel</button>
+                            <button type="button" value="cancel" formmethod="dialog" id="cancelNewTaskButton">Cancel</button>
                             <button type="submit" id="createTaskButton" value="default">Add Task</button>
                         </div>
                     </form>
@@ -60,13 +60,13 @@
                         <legend>Add a Project!</legend>
                         <fieldset>
                             <div>
-                                <label for="projectNameValue">Project Name:</label>
-                                <input type="text" name="projectName" id="projectNameValue">
+                                <label for="projectNameValue" class="required">Project Name:</label>
+                                <input type="text" name="projectName" id="projectNameValue" required>
                             </div>
                         </fieldset>
 
                         <div id="dialogButtons">
-                            <button value="cancel" formmethod="dialog">Cancel</button>
+                            <button type="button" value="cancel" formmethod="dialog" id="cancelNewProjectButton">Cancel</button>
                             <button type="submit" id="createProjectButton" value="default">Create Project</button>
                         </div>
                     </form>
@@ -83,50 +83,6 @@
         <div id="tasks">
             <h1>To-Do Tracker</h1>
             <div id="selectedProject"></div>
-            <!--
-            <dialog id="editDialog">
-                <h2>Edit Task</h2>
-                <form id="editTaskForm">
-                    <fieldset>
-                        <div>
-                            <label for="taskNameEdited">Task Name:</label>
-                            <input type="text" name="taskName" id="taskNameEdited">
-                        </div>
-                        <div>
-                            <label for="descriptionEdited">Description:</label>
-                            <input type="text" name="description" id="descriptionEdited">
-                        </div>
-                        <div>
-                            <label for="dueDateEdited">Due Date:</label>
-                            <input type="text" name="dueDate" id="dueDateEdited">
-                        </div>
-                        <p>Priority Level:</p>
-                        <div>
-                            <input type="radio" name="priorityChoiceEdited" id="optionHigh" value="high">
-                            <label class="priorityChoiceEdited" for="optionHigh">High</label>
-                        </div>
-                        <div>
-                            <input type="radio" name="priorityChoiceEdited" id="optionMedium" value="medium">
-                            <label class="priorityChoiceEdited" for="optionMedium">Medium</label>
-                        </div>
-                        <div>
-                            <input type="radio" name="priorityChoiceEdited" id="optionLow" value="low">
-                            <label class="priorityChoiceEdited" for="optionLow">Low</label>
-                        </div>
-                        <div>
-                            <label for="projectSelectEdited">Choose a project:</label>
-                            <select id="projectSelectEdited" name="selectedProjectOptionEdited">
-                                <option value="">Please select:</option>
-                            </select>
-                        </div>
-                    </fieldset>
-                    <div id="dialogButtons">
-                        <button value="cancel" formmethod="dialog" id="cancelButton">Cancel</button>
-                        <button type="submit" id="editTaskButton" value="default">Save</button>
-                    </div>
-                </form>
-            </dialog>
-        -->
         </div>
         
         <div id="user">
