@@ -70,8 +70,12 @@ export const createTasks = function createTaskUI(project) {
                     taskNameAndDueDate.removeChild(dueDate);
                 }
                 task.append(crossOff);
+                task.removeChild(editButton);
+
             } else {
                 currentProject[i].taskComplete();
+
+                task.append(editButton);
 
                 if (dueDate) {
                     taskNameAndDueDate.append(dueDate);
