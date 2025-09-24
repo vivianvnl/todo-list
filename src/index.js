@@ -1,9 +1,9 @@
 import "./globalStyles.css";
 import "./domStyles.css";
 
-import { projectStorage } from './storage.js';
+import { saveProjectData, getProjectData } from './storage.js';
 import { addProjectToList, Project, Task } from './todos.js';
-import { newTaskForm, newProjectForm, showProject, createProjectUI } from './dom.js';
+import { newTaskForm, newProjectForm, showProject } from './dom.js';
 
 const taskOne = new Task('Clean', 'bathroom, kitchen', 'tomorrow', 'high');
 const taskTwo = new Task('Organize', 'closet', '9:00pm', 'medium');
@@ -15,7 +15,10 @@ newProject.addTaskToProject(taskOne);
 newProject.addTaskToProject(taskTwo);
 newProject.addTaskToProject(taskThree);
 
-projectStorage();
+//save project to local storage
+//saveProjectData();
+
+getProjectData();
 newTaskForm();
 newProjectForm();
 showProject();

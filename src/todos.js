@@ -13,7 +13,7 @@ export let projectList = [];
 
 export function addProjectToList(project) {
     projectList.push(project);
-    console.log(projectList);
+    //console.log(projectList);
     return projectList;
 }
 
@@ -24,14 +24,5 @@ export class Task {
         this.dueDate = dueDate;
         this.priority = priority;
         this.completed = false;
-    }
-
-    taskComplete() {
-        if (this.completed === false) {
-            this.completed = true;
-        }
-        else {
-            this.completed = false;
-        }
     }
 };

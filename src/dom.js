@@ -1,3 +1,4 @@
+import { saveProjectData, getProjectData } from './storage.js';
 import { Project, projectList, addProjectToList, Task } from './todos.js';
 
 export const newTaskForm = function newTaskForm() {
@@ -40,6 +41,9 @@ export const newTaskForm = function newTaskForm() {
                 foundSelectedProject.addTaskToProject(newTask);
                 createTasks(foundSelectedProject);
             }
+
+            //save project to local storage
+            saveProjectData();
 
             taskDialog.close();
             taskForm.reset();   
@@ -89,7 +93,7 @@ export const createTasks = function createTaskUI(project) {
 
         checkbox.addEventListener('change', function () {
             if (this.checked) {
-                currentProject[i].taskComplete();
+                currentProject[i].completed = true;
 
                 task.setAttribute('style', 'background-color: #D6D6D6');
                 if (dueDate) {
@@ -98,8 +102,11 @@ export const createTasks = function createTaskUI(project) {
                 task.append(crossOff);
                 task.removeChild(editButton);
 
+                //save project to local storage
+                saveProjectData();
+
             } else {
-                currentProject[i].taskComplete();
+                currentProject[i].completed = false;
 
                 task.append(editButton);
 
@@ -118,6 +125,9 @@ export const createTasks = function createTaskUI(project) {
                 } else if (currentProject[i].priority === 'low') {
                     task.setAttribute('style', 'background-color: #B8E85F');
                 }
+
+                //save project to local storage
+                saveProjectData();
             }
         });
 
@@ -325,6 +335,9 @@ export const createTasks = function createTaskUI(project) {
                     projectToAppendTask.addTaskToProject(taskToMove);
                     createTasks(project);
                 }
+                //save project to local storage
+                saveProjectData();
+
                 editDialog.close();
             });
 
@@ -343,6 +356,10 @@ export const createTasks = function createTaskUI(project) {
         deleteButton.addEventListener('click', function () {
             this.parentElement.remove();
             currentProject.splice([i], 1);
+            console.log(projectList);
+
+            //save project to local storage
+            saveProjectData();
         });
 
         const taskNameAndDueDate = document.createElement('div');
@@ -385,6 +402,9 @@ export function newProjectForm() {
             const newProject = new Project(projectName);
             addProjectToList(newProject);
 
+            //save project to local storage
+            saveProjectData();
+
             projectDialog.close();
             projectForm.reset();
             return createProjectUI(newProject);
@@ -423,11 +443,11 @@ export function showProject() {
     const selectedProject = document.getElementById('selectedProject');
     const projectsToClick = document.getElementById('projectsToClick');
 
-    console.log(projectList.length);
     //show existing projects
+    getProjectData();
     for (let i = 0; i < projectList.length; i++) {
+        createProjectUI(projectList[i]);
         if (projectList[i].project.length > 0) {
-            createProjectUI(projectList[i]);
             createTasks(projectList[i]);
         }
     }

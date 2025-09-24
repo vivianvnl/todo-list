@@ -1,24 +1,29 @@
 import { addProjectToList, projectList } from './todos.js';
 
-export function projectStorage() {
-    function saveProjectData(project) {
-    localStorage.setItem(project.name, JSON.stringify(project));
-    }
-
+export function saveProjectData() {
     for (let i = 0; i < projectList.length; i++) {
-        saveProjectData(projectList[i]);
+        localStorage.setItem(projectList[i].name, JSON.stringify(projectList[i]));
     }
+    const allValues = Object.values(localStorage);
+    console.log(allValues);
+}
 
-    function getProjectData(project) {
-        const projectString = localStorage.getItem(project.name);
+export function getProjectData() {
+    projectList.length = 0;
+    console.log(projectList);
+    function retrieveData(project) {
+        const projectString = localStorage.getItem(project);
         const projectObject = JSON.parse(projectString);
-        console.log(projectString);
         console.log(projectObject);
-        //fix, also priority changes ?? when tasks r deleted and project switches, could b proj display or storage issue
-        //addProjectToList(projectObject);
+
+        addProjectToList(projectObject);
+        console.log(projectList);
     }
 
-    for (let i = 0; i < projectList.length; i++) {
-        getProjectData(projectList[i]);
+    const allKeys = Object.keys(localStorage);
+    for (let i = 0; i < allKeys.length; i++) {
+        retrieveData(allKeys[i]);
     }
 }
+
+//priority changes ?? when tasks r deleted and project switches, could b proj display or storage issue
