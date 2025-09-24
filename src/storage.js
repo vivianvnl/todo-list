@@ -1,11 +1,10 @@
 import { addProjectToList, projectList } from './todos.js';
 
 export function saveProjectData() {
+    localStorage.clear();
     for (let i = 0; i < projectList.length; i++) {
         localStorage.setItem(projectList[i].name, JSON.stringify(projectList[i]));
     }
-    const allValues = Object.values(localStorage);
-    console.log(allValues);
 }
 
 export function getProjectData() {

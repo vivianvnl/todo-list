@@ -2,7 +2,7 @@ import "./globalStyles.css";
 import "./domStyles.css";
 
 import { saveProjectData, getProjectData } from './storage.js';
-import { addProjectToList, Project, Task } from './todos.js';
+import { projectList, addProjectToList, Project, Task } from './todos.js';
 import { newTaskForm, newProjectForm, showProject } from './dom.js';
 
 const taskOne = new Task('Clean', 'bathroom, kitchen', 'tomorrow', 'high');
@@ -15,10 +15,12 @@ newProject.addTaskToProject(taskOne);
 newProject.addTaskToProject(taskTwo);
 newProject.addTaskToProject(taskThree);
 
-//save project to local storage
+////reset local storage to initial ---only use to reset page to default tasks
 //saveProjectData();
 
 getProjectData();
+console.log(projectList);
+
 newTaskForm();
 newProjectForm();
 showProject();

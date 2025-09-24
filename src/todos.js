@@ -9,11 +9,14 @@ export class Project {
     }
 }
 
+export function addTaskToExistingProject(projectToAddTask, task) {
+    projectToAddTask.project.push(task);
+}
+
 export let projectList = [];
 
 export function addProjectToList(project) {
     projectList.push(project);
-    //console.log(projectList);
     return projectList;
 }
 

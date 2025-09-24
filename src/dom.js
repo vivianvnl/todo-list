@@ -1,5 +1,5 @@
-import { saveProjectData, getProjectData } from './storage.js';
-import { Project, projectList, addProjectToList, Task } from './todos.js';
+import { saveProjectData } from './storage.js';
+import { Project, projectList, addProjectToList, Task, addTaskToExistingProject } from './todos.js';
 
 export const newTaskForm = function newTaskForm() {
     const newTaskButton = document.getElementById('newTaskButton');
@@ -46,7 +46,7 @@ export const newTaskForm = function newTaskForm() {
             saveProjectData();
 
             taskDialog.close();
-            taskForm.reset();   
+            taskForm.reset();
         } else if (taskName === '' && description === '' && dueDate === '' && priority === null && selectedProjectOption === '') {
             if (form.contains(nullErrorMessage) === false) {
                 form.append(nullErrorMessage);
@@ -54,11 +54,11 @@ export const newTaskForm = function newTaskForm() {
         } else if (taskName === '' || priority === null) {
             if (form.contains(requiredErrorMessage) === false) {
                 if (form.contains(nullErrorMessage) === true) {
-                form.removeChild(nullErrorMessage);
-            }
+                    form.removeChild(nullErrorMessage);
+                }
                 form.append(requiredErrorMessage);
             }
-        }      
+        }
     });
     const cancelNewTaskButton = document.getElementById('cancelNewTaskButton');
     cancelNewTaskButton.addEventListener('click', function () {
@@ -203,7 +203,7 @@ export const createTasks = function createTaskUI(project) {
             priorityChoiceHighEditedLabel.textContent = 'High';
             priorityChoiceHighEditedLabel.setAttribute('for', 'optionHigh');
             priorityChoiceHighEditedDiv.append(priorityChoiceHighEditedInput, priorityChoiceHighEditedLabel);
-            
+
             const priorityChoiceMediumEditedDiv = document.createElement('div');
             priorityChoiceMediumEditedDiv.id = 'priorityChoiceMediumEditedDiv';
             const priorityChoiceMediumEditedInput = document.createElement('input');
@@ -328,11 +328,11 @@ export const createTasks = function createTaskUI(project) {
                 if (projectSelectEditedSelect.value === '') {
                     projectSelectEditedSelect.value = projectName;
                 }
-                
+
                 if (projectSelectEditedSelect.value !== projectName && projectSelectEditedSelect.value !== '') {
                     const projectToAppendTask = projectList.find(project => project.name === projectSelectEditedSelect.value);
                     const [taskToMove] = currentProject.splice([i], 1);
-                    projectToAppendTask.addTaskToProject(taskToMove);
+                    addTaskToExistingProject(projectToAppendTask, taskToMove);
                     createTasks(project);
                 }
                 //save project to local storage
@@ -423,11 +423,56 @@ export function newProjectForm() {
 
 export function createProjectUI(project) {
     //add project to nav bar
-    const projectList = document.getElementById('projectsToClick');
-    const projectListItem = document.createElement('button');
-    projectListItem.textContent = project.name;
-    projectListItem.classList.add('projectButtons');
-    projectList.append(projectListItem);
+    const projectsToClick = document.getElementById('projectsToClick');
+    const projectListItem = document.createElement('div');
+    projectListItem.classList.add('projectListItem');
+    const projectListButton = document.createElement('button');
+    projectListButton.textContent = project.name;
+    projectListButton.classList.add('projectButtons');
+
+    const selectedProject = document.getElementById('selectedProject');
+    projectListButton.addEventListener('click', (event) => {
+        selectedProject.innerHTML = '';
+
+        const foundProject = projectList.find(project => project.name === event.target.textContent);
+
+        if (foundProject.project.length > 0) {
+            createTasks(foundProject);
+        } else if (foundProject.project.length === 0) {
+            selectedProject.innerHTML = `
+        <h2>${foundProject.name}</h2>
+        `;
+        }
+    });
+
+    const deleteProjectButton = document.createElement('button');
+    deleteProjectButton.textContent = "+";
+    deleteProjectButton.id = 'deleteProjectButton';
+
+    projectListItem.append(projectListButton, deleteProjectButton);
+    projectsToClick.append(projectListItem);
+
+    deleteProjectButton.addEventListener('click', function () {
+        this.parentElement.remove();
+
+        const projectToDeleteIndex = projectList.indexOf(project);
+        projectList.splice(projectToDeleteIndex, 1);
+        console.log(projectList);
+
+        //save project to local storage
+        saveProjectData();
+
+        //display another project
+        selectedProject.innerHTML = '';
+        const displayFirstProject = projectList[0];
+        if (displayFirstProject.project.length > 0) {
+            createTasks(displayFirstProject);
+        } else if (displayFirstProject.project.length === 0) {
+            selectedProject.innerHTML = `
+        <h2>${displayFirstProject.name}</h2>
+        `;
+        }
+    });
 
     //add project to new task form
     const projectOptions = document.getElementById('projectSelect');
@@ -440,32 +485,12 @@ export function createProjectUI(project) {
 }
 
 export function showProject() {
-    const selectedProject = document.getElementById('selectedProject');
-    const projectsToClick = document.getElementById('projectsToClick');
-
     //show existing projects
-    console.log(projectList);
-    for (let i = 0; i < projectList.length; i++) {
+    for (let i = projectList.length - 1; i >= 0; i--) {
         createProjectUI(projectList[i]);
         if (projectList[i].project.length > 0) {
             createTasks(projectList[i]);
         }
     }
-
-    projectsToClick.addEventListener('click', (event) => {
-        selectedProject.innerHTML = '';
-
-        const foundProject = projectList.find(project => project.name === event.target.textContent);
-
-        if (event.target.tagName === 'BUTTON') {
-            if (foundProject.project.length > 0) {
-                createTasks(foundProject);
-            } else if (foundProject.project.length === 0) {
-                selectedProject.innerHTML = `
-            <h2>${foundProject.name}</h2>
-            `;
-            }
-        }
-    });
 }
 

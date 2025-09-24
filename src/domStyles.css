@@ -95,12 +95,15 @@ p {
     top: 18px;
 }
 
-#deleteButton {
+#deleteButton, #deleteProjectButton {
     font-family: "Arial", sans-serif;
-    font-size: 95px;
     font-weight: 400;
     align-self: center;
     transform: rotate(45deg);
+}
+
+#deleteButton {
+    font-size: 95px;
 
     position: absolute;
     right: 25px;
@@ -167,10 +170,33 @@ input[type='text'] {
     font-size: 25px;
 }
 
-#projectsToClick {
+.projectListItem {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+}
+
+.projectButtons {
+    display: flex;
+    width: 140px;
+}
+
+#deleteProjectButton {
+    opacity: 0;
+}
+
+#deleteProjectButton:hover, .projectButtons:hover + #deleteProjectButton {
+    opacity: 1;
+}
+
+.projectButtons:hover + #deleteProjectButton {
+    color: white;
+}
+
+#deleteProjectButton, #deleteProjectButton:hover {
+    font-size: 50px;
+    padding: 10px 5px;
+
+    position: absolute;
+    left: 250px;
 }
 
 input[type="text"]:required:invalid {
