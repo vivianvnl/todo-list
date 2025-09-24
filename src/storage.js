@@ -25,5 +25,3 @@ export function getProjectData() {
         retrieveData(allKeys[i]);
     }
 }
-
-//priority changes ?? when tasks r deleted and project switches, could b proj display or storage issue

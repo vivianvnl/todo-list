@@ -21,3 +21,5 @@ Create a webapp where you can add to-do list tasks to different projects and add
 - store task info in database
   - view database
 - check browser refresh
+
+//check if priority changes ?? when tasks r deleted and project switches, could b proj display or storage issue
