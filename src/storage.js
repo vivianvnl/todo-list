@@ -10,14 +10,11 @@ export function saveProjectData() {
 
 export function getProjectData() {
     projectList.length = 0;
-    console.log(projectList);
     function retrieveData(project) {
         const projectString = localStorage.getItem(project);
         const projectObject = JSON.parse(projectString);
-        console.log(projectObject);
 
         addProjectToList(projectObject);
-        console.log(projectList);
     }
 
     const allKeys = Object.keys(localStorage);

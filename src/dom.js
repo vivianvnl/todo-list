@@ -444,7 +444,7 @@ export function showProject() {
     const projectsToClick = document.getElementById('projectsToClick');
 
     //show existing projects
-    getProjectData();
+    console.log(projectList);
     for (let i = 0; i < projectList.length; i++) {
         createProjectUI(projectList[i]);
         if (projectList[i].project.length > 0) {
