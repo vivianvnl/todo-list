@@ -35,10 +35,10 @@ export const newTaskForm = function newTaskForm() {
             const foundSelectedProject = projectList.find(project => project.name === selectedProjectOption);
 
             if (foundSelectedProject === undefined) {
-                projectList[0].addTaskToProject(newTask);
+                addTaskToExistingProject(projectList[0], newTask);
                 createTasks(projectList[0]);
             } else {
-                foundSelectedProject.addTaskToProject(newTask);
+                addTaskToExistingProject(foundSelectedProject, newTask);
                 createTasks(foundSelectedProject);
             }
 
@@ -462,16 +462,7 @@ export function createProjectUI(project) {
         //save project to local storage
         saveProjectData();
 
-        //display another project
-        selectedProject.innerHTML = '';
-        const displayFirstProject = projectList[0];
-        if (displayFirstProject.project.length > 0) {
-            createTasks(displayFirstProject);
-        } else if (displayFirstProject.project.length === 0) {
-            selectedProject.innerHTML = `
-        <h2>${displayFirstProject.name}</h2>
-        `;
-        }
+        showDefaultProject();
     });
 
     //add project to new task form
@@ -484,13 +475,27 @@ export function createProjectUI(project) {
     projectOptions.append(projectOption);
 }
 
-export function showProject() {
-    //show existing projects
-    for (let i = projectList.length - 1; i >= 0; i--) {
+export function showPreExistingProjects() {
+    for (let i = 0; i < projectList.length; i++) {
         createProjectUI(projectList[i]);
         if (projectList[i].project.length > 0) {
             createTasks(projectList[i]);
         }
+    }
+}
+
+export function showDefaultProject() {
+    const selectedProject = document.getElementById('selectedProject');
+    selectedProject.innerHTML = '';
+
+    const defaultProjectDisplay = projectList[0];
+
+    if (defaultProjectDisplay.project.length > 0) {
+        createTasks(defaultProjectDisplay);
+    } else if (defaultProjectDisplay.project.length === 0) {
+        selectedProject.innerHTML = `
+    <h2>${defaultProjectDisplay.name}</h2>
+    `;
     }
 }
 

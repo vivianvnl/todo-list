@@ -17,9 +17,6 @@ Create a webapp where you can add to-do list tasks to different projects and add
 - checklist (cross off)
 - new task lets you choose which project to add to
 - expand/modify tasks
-
 - store task info in database
   - view database
 - check browser refresh
-
-//check if priority changes ?? when tasks r deleted and project switches, could b proj display or storage issue

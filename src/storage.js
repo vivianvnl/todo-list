@@ -17,7 +17,8 @@ export function getProjectData() {
     }
 
     const allKeys = Object.keys(localStorage);
-    for (let i = 0; i < allKeys.length; i++) {
+    console.log(allKeys);
+    for (let i = allKeys.length - 1; i >= 0; i--) {
         retrieveData(allKeys[i]);
     }
 }
