@@ -10,9 +10,17 @@
     box-sizing: border-box;
 }
 
+nav, nav > div, #user-and-pic {
+    display: flex;
+}
+
+nav, nav > div {
+    flex-direction: column;
+}
+
 body {
     display: grid;
-    grid-template-columns: 1fr 3.75fr;
+    grid-template-columns: 1fr 4.5fr;
     height: 100vh;
 }
 
@@ -27,11 +35,15 @@ h1 {
 
 h2 {
     font-size: 65px;
-    padding: 100px 0 10px;
+    padding: 100px 0 0;
 }
 
 h3 {
     font-size: 55px;
+}
+
+nav h3 {
+    padding: 0 0 8px;
 }
 
 h4 {
@@ -39,10 +51,10 @@ h4 {
 }
 
 button {
-    font-size: 40px;
+    font-size: 42px;
 }
 
-button:hover, #user-and-pic:hover {
+button:hover, #user-and-pic h4:hover {
     cursor: pointer;
 }
 
@@ -56,7 +68,7 @@ main {
 }
 
 #tasks {
-    padding-left: 120px;
+    padding-left: 150px;
 }
 
 nav, button {
@@ -65,15 +77,14 @@ nav, button {
 
 nav {
     background-color: #FFEE53;
-    display: flex;
-    flex-direction: column;
-    padding: 70px 0 0 90px;
+    padding: 60px 0 0 50px;
     gap: 250px;
+
+    min-width: 275px;
+    user-select: none;
 }
 
 nav > div {
-    display: flex;
-    flex-direction: column;
     align-items: start;
 }
 
@@ -89,17 +100,16 @@ button:hover {
 }
 
 #user-and-pic {
-    display: flex;
     align-items: center;
     gap: 20px;
     font-style: italic;
     letter-spacing: 0.5px;
     justify-content: end;
-    padding: 30px 60px 0 0;
+    padding: 40px 60px 0 0;
 }
 
 #user-pic {
-    background-color: #D6D6D6;
+    background-color: #FFEE53;
     border-radius: 50%;
     width: 60px;
     height: 60px;

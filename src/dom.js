@@ -149,7 +149,7 @@ export const createTasks = function createTaskUI(project) {
             const editDialog = document.createElement('dialog');
             editDialog.id = 'editDialog';
 
-            const editDialogHeader = document.createElement('h2');
+            const editDialogHeader = document.createElement('legend');
             editDialogHeader.textContent = 'Edit Task';
             const editTaskForm = document.createElement('form');
             editTaskForm.id = 'editTaskForm';
@@ -249,6 +249,7 @@ export const createTasks = function createTaskUI(project) {
 
 
             const dialogButtons = document.createElement('div');
+            dialogButtons.classList.add('dialogButtons');
             const cancelButton = document.createElement('button');
             cancelButton.setAttribute('value', 'cancel');
             cancelButton.setAttribute('formmethod', 'dialog');
