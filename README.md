@@ -20,3 +20,8 @@ Create a webapp where you can add to-do list tasks to different projects and add
 - store task info in database
   - view database
 - check browser refresh
+
+## Reflection
+This project took a lot more from me than I ever expected. Easily the longest project I've worked on so far during TOP, taking me about 12 days to complete. I'm really happy how it came out though, and I'm so glad I made it through.
+
+I was genuinely worried for a second I wouldn't be able to make this as I felt very overwhelmed for the first week, thinking this project was too out of my reach. Once again, though, taking a step back and just thinking about what I want to achieve in non-programming terms while being away from the computer, I was able to reach a solution much faster than by sitting in front of the computer for hours doing essentially nothing. Another game of patience, but 100% worth it. After completing this one, I feel like I have a much, much better grasp on JavaScript as a whole and feel invincible! I'm genuinely so excited to do more...after I take a short break, haha.
